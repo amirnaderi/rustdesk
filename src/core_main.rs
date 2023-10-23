@@ -160,6 +160,8 @@ pub fn core_main() -> Option<Vec<String>> {
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     init_plugins(&args);
     log::info!("main start args:{:?}", args);
+    crate::ipc::get_custom_options();
+    log::info!("Run DaftareShoma Coustom Config");
     if args.is_empty() || is_empty_uni_link(&args[0]) {
         std::thread::spawn(move || crate::start_server(false));
     } else {
