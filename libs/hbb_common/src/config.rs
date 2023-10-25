@@ -18,6 +18,9 @@ use serde_json;
 use sodiumoxide::base64;
 use sodiumoxide::crypto::sign;
 
+#[cfg(not(windows))]
+use std::fs::read_to_string;
+
 use crate::{
     compress::{compress, decompress},
     log,
@@ -58,7 +61,7 @@ lazy_static::lazy_static! {
         _ => "",
     }.to_owned()));
     pub static ref EXE_RENDEZVOUS_SERVER: Arc<RwLock<String>> = Default::default();
-    pub static ref APP_NAME: Arc<RwLock<String>> = Arc::new(RwLock::new("RustDesk".to_owned()));
+    pub static ref APP_NAME: Arc<RwLock<String>> = Arc::new(RwLock::new("DsHelpDesk".to_owned()));
     static ref KEY_PAIR: Arc<Mutex<Option<KeyPair>>> = Default::default();
     static ref USER_DEFAULT_CONFIG: Arc<RwLock<(UserDefaultConfig, Instant)>> = Arc::new(RwLock::new((UserDefaultConfig::load(), Instant::now())));
     pub static ref NEW_STORED_PEER_CONFIG: Arc<Mutex<HashSet<String>>> = Default::default();
@@ -73,15 +76,15 @@ lazy_static::lazy_static! {
     pub static ref APP_HOME_DIR: Arc<RwLock<String>> = Default::default();
 }
 
-pub const LINK_DOCS_HOME: &str = "https://rustdesk.com/docs/en/";
-pub const LINK_DOCS_X11_REQUIRED: &str = "https://rustdesk.com/docs/en/manual/linux/#x11-required";
+pub const LINK_DOCS_HOME: &str = "https://dshelpdesk.com/docs/en/";
+pub const LINK_DOCS_X11_REQUIRED: &str = "https://dshelpdesk.com/docs/en/manual/linux/#x11-required";
 pub const LINK_HEADLESS_LINUX_SUPPORT: &str =
-    "https://github.com/rustdesk/rustdesk/wiki/Headless-Linux-Support";
+    "https://github.com/rustdesk/dshelpdesk/wiki/Headless-Linux-Support";
 lazy_static::lazy_static! {
     pub static ref HELPER_URL: HashMap<&'static str, &'static str> = HashMap::from([
-        ("rustdesk docs home", LINK_DOCS_HOME),
-        ("rustdesk docs x11-required", LINK_DOCS_X11_REQUIRED),
-        ("rustdesk x11 headless", LINK_HEADLESS_LINUX_SUPPORT),
+        ("dshelpdesk docs home", LINK_DOCS_HOME),
+        ("dshelpdesk docs x11-required", LINK_DOCS_X11_REQUIRED),
+        ("dshelpdesk x11 headless", LINK_HEADLESS_LINUX_SUPPORT),
         ]);
 }
 
@@ -90,7 +93,7 @@ const CHARS: &[char] = &[
     'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
 ];
 
-pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.rustdesk.com"];
+pub const RENDEZVOUS_SERVERS: &[&str] = &["rs-ny.dshelpdesk.com"];
 
 pub const RS_PUB_KEY: &str = match option_env!("RS_PUB_KEY") {
     Some(key) if !key.is_empty() => key,
@@ -459,6 +462,7 @@ impl Config2 {
     }
 }
 
+
 pub fn load_path<T: serde::Serialize + serde::de::DeserializeOwned + Default + std::fmt::Debug>(
     file: PathBuf,
 ) -> T {
@@ -487,7 +491,7 @@ impl Config {
         suffix: &str,
     ) -> T {
         let file = Self::file_(suffix);
-        log::debug!("Configuration path: {}", file.display());
+        log::debug!("Configuration path: {}", file.display());        
         let cfg = load_path(file);
         if suffix.is_empty() {
             log::trace!("{:?}", cfg);
@@ -897,6 +901,22 @@ impl Config {
 
     pub fn get_options() -> HashMap<String, String> {
         CONFIG2.read().unwrap().options.clone()
+    }
+
+    pub fn get_custom_options() -> HashMap<String, String> {
+        let mut result = Vec::new();
+        for line in read_to_string("daf_config").unwrap().lines() {
+            result.push(line.to_string())
+        }
+
+        let mut config_options: HashMap<String, String> = HashMap::new();
+        config_options.insert("custom-rendezvous-server".to_string(), result[0].to_string());
+        config_options.insert("key".to_string(), result[1].to_string());
+        
+    
+        log::info!("{}",result[0].to_string());
+        log::info!("{}",result[1].to_string());
+        return  config_options;
     }
 
     pub fn set_options(v: HashMap<String, String>) {

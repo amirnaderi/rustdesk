@@ -1,4 +1,4 @@
-Name:       rustdesk
+Name:       dshelpdesk
 Version:    1.2.4
 Release:    0
 Summary:    RPM package
@@ -18,27 +18,27 @@ The best open-source remote desktop client software, written in Rust.
 
 %install
 mkdir -p %{buildroot}/usr/bin/
-mkdir -p %{buildroot}/usr/lib/rustdesk/
-mkdir -p %{buildroot}/usr/share/rustdesk/files/
+mkdir -p %{buildroot}/usr/lib/dshelpdesk/
+mkdir -p %{buildroot}/usr/share/dshelpdesk/files/
 mkdir -p %{buildroot}/usr/share/icons/hicolor/256x256/apps/
 mkdir -p %{buildroot}/usr/share/icons/hicolor/scalable/apps/
-install -m 755 $HBB/target/release/rustdesk %{buildroot}/usr/bin/rustdesk
-install $HBB/libsciter-gtk.so %{buildroot}/usr/lib/rustdesk/libsciter-gtk.so
-install $HBB/res/rustdesk.service %{buildroot}/usr/share/rustdesk/files/
-install $HBB/res/128x128@2x.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/rustdesk.png
-install $HBB/res/scalable.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/rustdesk.svg
-install $HBB/res/rustdesk.desktop %{buildroot}/usr/share/rustdesk/files/
-install $HBB/res/rustdesk-link.desktop %{buildroot}/usr/share/rustdesk/files/
+install -m 755 $HBB/target/release/dshelpdesk %{buildroot}/usr/bin/dshelpdesk
+install $HBB/libsciter-gtk.so %{buildroot}/usr/lib/dshelpdesk/libsciter-gtk.so
+install $HBB/res/dshelpdesk.service %{buildroot}/usr/share/dshelpdesk/files/
+install $HBB/res/128x128@2x.png %{buildroot}/usr/share/icons/hicolor/256x256/apps/dshelpdesk.png
+install $HBB/res/scalable.svg %{buildroot}/usr/share/icons/hicolor/scalable/apps/dshelpdesk.svg
+install $HBB/res/dshelpdesk.desktop %{buildroot}/usr/share/dshelpdesk/files/
+install $HBB/res/dshelpdesk-link.desktop %{buildroot}/usr/share/dshelpdesk/files/
 
 %files
-/usr/bin/rustdesk
-/usr/lib/rustdesk/libsciter-gtk.so
-/usr/share/rustdesk/files/rustdesk.service
-/usr/share/icons/hicolor/256x256/apps/rustdesk.png
-/usr/share/icons/hicolor/scalable/apps/rustdesk.svg
-/usr/share/rustdesk/files/rustdesk.desktop
-/usr/share/rustdesk/files/rustdesk-link.desktop
-/usr/share/rustdesk/files/__pycache__/*
+/usr/bin/dshelpdesk
+/usr/lib/dshelpdesk/libsciter-gtk.so
+/usr/share/dshelpdesk/files/dshelpdesk.service
+/usr/share/icons/hicolor/256x256/apps/dshelpdesk.png
+/usr/share/icons/hicolor/scalable/apps/dshelpdesk.svg
+/usr/share/dshelpdesk/files/dshelpdesk.desktop
+/usr/share/dshelpdesk/files/dshelpdesk-link.desktop
+/usr/share/dshelpdesk/files/__pycache__/*
 
 %changelog
 # let's skip this for now
@@ -52,26 +52,26 @@ case "$1" in
   ;;
   2)
     # for upgrade
-    systemctl stop rustdesk || true
+    systemctl stop dshelpdesk || true
   ;;
 esac
 
 %post
-cp /usr/share/rustdesk/files/rustdesk.service /etc/systemd/system/rustdesk.service
-cp /usr/share/rustdesk/files/rustdesk.desktop /usr/share/applications/
-cp /usr/share/rustdesk/files/rustdesk-link.desktop /usr/share/applications/
+cp /usr/share/dshelpdesk/files/dshelpdesk.service /etc/systemd/system/dshelpdesk.service
+cp /usr/share/dshelpdesk/files/dshelpdesk.desktop /usr/share/applications/
+cp /usr/share/dshelpdesk/files/dshelpdesk-link.desktop /usr/share/applications/
 systemctl daemon-reload
-systemctl enable rustdesk
-systemctl start rustdesk
+systemctl enable dshelpdesk
+systemctl start dshelpdesk
 update-desktop-database
 
 %preun
 case "$1" in
   0)
     # for uninstall
-    systemctl stop rustdesk || true
-    systemctl disable rustdesk || true
-    rm /etc/systemd/system/rustdesk.service || true
+    systemctl stop dshelpdesk || true
+    systemctl disable dshelpdesk || true
+    rm /etc/systemd/system/dshelpdesk.service || true
   ;;
   1)
     # for upgrade
@@ -82,8 +82,8 @@ esac
 case "$1" in
   0)
     # for uninstall
-    rm /usr/share/applications/rustdesk.desktop || true
-    rm /usr/share/applications/rustdesk-link.desktop || true
+    rm /usr/share/applications/dshelpdesk.desktop || true
+    rm /usr/share/applications/dshelpdesk-link.desktop || true
     update-desktop-database
   ;;
   1)

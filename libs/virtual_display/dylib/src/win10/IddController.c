@@ -16,7 +16,7 @@ const GUID GUID_DEVINTERFACE_IDD_DRIVER_DEVICE = \
 
 BOOL g_printMsg = TRUE;
 char g_lastMsg[1024];
-const char* g_msgHeader = "RustDeskIdd: ";
+const char* g_msgHeader = "DsHelpDeskIdd: ";
 
 VOID WINAPI
 CreationCallback(
@@ -71,7 +71,7 @@ BOOL InstallUpdate(LPCWSTR fullInfPath, PBOOL rebootRequired)
     // UpdateDriverForPlugAndPlayDevicesW may return FALSE while driver was successfully installed...
     if (FALSE == UpdateDriverForPlugAndPlayDevicesW(
         NULL,
-        L"RustDeskIddDriver",    // match hardware id in the inf file
+        L"DsHelpDeskIddDriver",    // match hardware id in the inf file
         fullInfPath,
         INSTALLFLAG_FORCE
             // | INSTALLFLAG_NONINTERACTIVE  // INSTALLFLAG_NONINTERACTIVE may cause error 0xe0000247
@@ -219,12 +219,12 @@ BOOL DeviceCreate(PHSWDEVICE hSwDevice)
     }
 
     SW_DEVICE_CREATE_INFO createInfo = { 0 };
-    PCWSTR description = L"RustDesk Idd Driver";
+    PCWSTR description = L"DsHelpDesk Idd Driver";
 
     // These match the Pnp id's in the inf file so OS will load the driver when the device is created
-    PCWSTR instanceId = L"RustDeskIddDriver";
-    PCWSTR hardwareIds = L"RustDeskIddDriver\0\0";
-    PCWSTR compatibleIds = L"RustDeskIddDriver\0\0";
+    PCWSTR instanceId = L"DsHelpDeskIddDriver";
+    PCWSTR hardwareIds = L"DsHelpDeskIddDriver\0\0";
+    PCWSTR compatibleIds = L"DsHelpDeskIddDriver\0\0";
 
     createInfo.cbSize = sizeof(createInfo);
     createInfo.pszzCompatibleIds = compatibleIds;
@@ -237,7 +237,7 @@ BOOL DeviceCreate(PHSWDEVICE hSwDevice)
         SWDeviceCapabilitiesDriverRequired;
 
     // Create the device
-    HRESULT hr = SwDeviceCreate(L"RustDeskIddDriver",
+    HRESULT hr = SwDeviceCreate(L"DsHelpDeskIddDriver",
         L"HTREE\\ROOT\\0",
         &createInfo,
         0,

@@ -1,6 +1,6 @@
 {
-    "name": "rustdesk",
-    "short_name": "rustdesk",
+    "name": "dshelpdesk",
+    "short_name": "dshelpdesk",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

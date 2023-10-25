@@ -5,9 +5,6 @@ use std::{
 #[cfg(not(windows))]
 use std::{fs::File, io::prelude::*};
 
-#[cfg(not(windows))]
-use std::fs::read_to_string;
-
 use bytes::Bytes;
 use parity_tokio_ipc::{
     Connection as Conn, ConnectionClient as ConnClient, Endpoint, Incoming, SecurityAttributes,
@@ -791,19 +788,18 @@ async fn get_options_(ms_timeout: u64) -> ResultType<HashMap<String, String>> {
     }
 }
 
-#[tokio::main(flavor = "current_thread")]
-pub async fn get_custom_options() {
-    let mut result = Vec::new();
-    for line in read_to_string("daf_config").unwrap().lines() {
-        result.push(line.to_string())
-    }
-    Config::set_option("custom-rendezvous-server".to_string(),"".to_string());
-    Config::set_option("relay-server".to_string(),"".to_string());
-    Config::set_option("api-server".to_string(),"".to_string());
-    Config::set_option("key".to_string(),"".to_string());
+async fn get_custom_options_(ms_timeout: u64) -> ResultType<HashMap<String, String>> {
+    Ok(Config::get_custom_options())
+}
 
-    Config::set_option("custom-rendezvous-server".to_string(),result[0].to_string());
-    Config::set_option("key".to_string(),result[1].to_string());
+
+#[tokio::main(flavor = "current_thread")]
+pub async fn get_custom_options() -> HashMap<String, String> {
+    get_custom_options_async().await
+}
+
+pub async fn get_custom_options_async() -> HashMap<String, String> {
+    get_custom_options_(1000).await.unwrap_or(Config::get_custom_options())
 }
 
 pub async fn get_options_async() -> HashMap<String, String> {

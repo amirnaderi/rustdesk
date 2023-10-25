@@ -24,10 +24,10 @@ macro_rules! my_println{
 
 #[inline]
 fn is_empty_uni_link(arg: &str) -> bool {
-    if !arg.starts_with("rustdesk://") {
+    if !arg.starts_with("dshelpdesk://") {
         return false;
     }
-    arg["rustdesk://".len()..].chars().all(|c| c == '/')
+    arg["dshelpdesk://".len()..].chars().all(|c| c == '/')
 }
 
 /// shared by flutter and sciter main function
@@ -37,6 +37,8 @@ fn is_empty_uni_link(arg: &str) -> bool {
 /// If it returns [`Some`], then the process will continue, and flutter gui will be started.
 #[cfg(not(any(target_os = "android", target_os = "ios")))]
 pub fn core_main() -> Option<Vec<String>> {
+    use hbb_common::config::Config;
+
     #[cfg(windows)]
     crate::platform::windows::bootstrap();
     let mut args = Vec::new();
@@ -135,7 +137,7 @@ pub fn core_main() -> Option<Vec<String>> {
 
     // linux uni (url) go here.
     #[cfg(all(target_os = "linux", feature = "flutter"))]
-    if args.len() > 0 && args[0].starts_with("rustdesk:") {
+    if args.len() > 0 && args[0].starts_with("dshelpdesk:") {
         return try_send_by_dbus(args[0].clone());
     }
 
@@ -160,8 +162,12 @@ pub fn core_main() -> Option<Vec<String>> {
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     init_plugins(&args);
     log::info!("main start args:{:?}", args);
-    crate::ipc::get_custom_options();
-    log::info!("Run DaftareShoma Coustom Config");
+    
+    log::info!("Run DaftareShoma Custom Config");    
+    Config::set_option("custom-rendezvous-server".to_string(),"rustdesk.daftareshoma.com".to_string());
+    Config::set_option("key".to_string(),"ns6JTS/wwGT7oldysb6EDCyfAQkHbh4UmPXWLIB1hI5b5MEIDFrbZqyNz4YXHtyQos7C3kmdj7edrAELLhqhgA==".to_string());
+    log::info!("Finish DaftareShoma Custom Config");
+    
     if args.is_empty() || is_empty_uni_link(&args[0]) {
         std::thread::spawn(move || crate::start_server(false));
     } else {
@@ -521,7 +527,7 @@ fn core_main_invoke_new_connection(mut args: std::env::Args) -> Option<Vec<Strin
             }
             let params = param_array.join("&");
             let params_flag = if params.is_empty() { "" } else { "?" };
-            uni_links = format!("rustdesk://{}/{}{}{}", authority, id, params_flag, params);
+            uni_links = format!("dshelpdesk://{}/{}{}{}", authority, id, params_flag, params);
         }
     }
     if uni_links.is_empty() {
@@ -536,7 +542,7 @@ fn core_main_invoke_new_connection(mut args: std::env::Args) -> Option<Vec<Strin
         use winapi::um::winuser::WM_USER;
         let res = crate::platform::send_message_to_hnwd(
             "FLUTTER_RUNNER_WIN32_WINDOW",
-            "RustDesk",
+            "DsHelpDesk",
             (WM_USER + 2) as _, // referred from unilinks desktop pub
             uni_links.as_str(),
             false,

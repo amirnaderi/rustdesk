@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=DsHelpDeskURL Scheme Handler
+NoDisplay=true
+MimeType=x-scheme-handler/dshelpdesk;
+TryExec=dshelpdesk
+Exec=dshelpdesk %u
+Icon=dshelpdesk
+Terminal=false
+Type=Application
+StartupNotify=false

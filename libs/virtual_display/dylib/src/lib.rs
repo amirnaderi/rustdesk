@@ -49,7 +49,7 @@ pub fn install_update_driver(_reboot_required: &mut bool) -> ResultType<()> {
     unsafe {
         {
             // Device must be created before install driver.
-            // https://github.com/fufesou/RustDeskIddDriver/issues/1
+            // https://github.com/fufesou/DsHelpDeskIddDriver/issues/1
             if let Err(e) = create_device() {
                 bail!("{}", e);
             }

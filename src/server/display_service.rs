@@ -8,7 +8,7 @@ use scrap::Display;
 #[cfg(target_os = "linux")]
 use std::sync::atomic::{AtomicBool, Ordering};
 
-// https://github.com/rustdesk/rustdesk/discussions/6042, avoiding dbus call
+// https://github.com/rustdesk/dshelpdesk/discussions/6042, avoiding dbus call
 #[cfg(target_os = "linux")]
 pub(super) static IS_X11: AtomicBool = AtomicBool::new(false);
 
@@ -23,7 +23,7 @@ lazy_static::lazy_static! {
     static ref IS_CAPTURER_MAGNIFIER_SUPPORTED: bool = is_capturer_mag_supported();
     static ref CHANGED_RESOLUTIONS: Arc<RwLock<HashMap<String, ChangedResolution>>> = Default::default();
     // Initial primary display index.
-    // It should only be updated when the rustdesk server is started, and should not be updated when displays changed.
+    // It should only be updated when the dshelpdesk server is started, and should not be updated when displays changed.
     pub static ref PRIMARY_DISPLAY_IDX: usize = get_primary();
     static ref SYNC_DISPLAYS: Arc<Mutex<SyncDisplaysInfo>> = Default::default();
 }

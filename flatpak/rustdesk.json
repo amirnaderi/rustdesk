@@ -1,32 +1,32 @@
 {
-  "id": "com.rustdesk.RustDesk",
+  "id": "com.dshelpdesk.DsHelpDesk",
   "runtime": "org.freedesktop.Platform",
   "runtime-version": "23.08",
   "sdk": "org.freedesktop.Sdk",
-  "command": "rustdesk",
-  "icon": "share/icons/hicolor/scalable/apps/rustdesk.svg",
+  "command": "dshelpdesk",
+  "icon": "share/icons/hicolor/scalable/apps/dshelpdesk.svg",
   "modules": [
     "shared-modules/libappindicator/libappindicator-gtk3-12.10.json",
     "xdotool.json",
     {
-      "name": "rustdesk",
+      "name": "dshelpdesk",
       "buildsystem": "simple",
       "build-commands": [
-        "bsdtar -zxvf rustdesk-1.2.4.deb",
+        "bsdtar -zxvf dshelpdesk-1.2.4.deb",
         "tar -xvf ./data.tar.xz",
         "cp -r ./usr/*  /app/",
-        "mkdir -p /app/bin && ln -s /app/lib/rustdesk/rustdesk /app/bin/rustdesk",
-        "mv /app/share/applications/rustdesk.desktop /app/share/applications/com.rustdesk.RustDesk.desktop",
-        "sed -i '/^Icon=/ c\\Icon=com.rustdesk.RustDesk' /app/share/applications/com.rustdesk.RustDesk.desktop",
-        "sed -i '/^Icon=/ c\\Icon=com.rustdesk.RustDesk' /app/share/applications/rustdesk-link.desktop",
-        "mv /app/share/icons/hicolor/scalable/apps/rustdesk.svg /app/share/icons/hicolor/scalable/apps/com.rustdesk.RustDesk.svg",
-        "for size in 16 24 32 48 64 128 256 512; do\n rsvg-convert -w $size -h $size -f png -o $size.png logo.svg\n install -Dm644 $size.png /app/share/icons/hicolor/${size}x${size}/apps/com.rustdesk.RustDesk.png\n done"
+        "mkdir -p /app/bin && ln -s /app/lib/dshelpdesk/dshelpdesk /app/bin/dshelpdesk",
+        "mv /app/share/applications/dshelpdesk.desktop /app/share/applications/com.dshelpdesk.DsHelpDesk.desktop",
+        "sed -i '/^Icon=/ c\\Icon=com.dshelpdesk.DsHelpDesk' /app/share/applications/com.dshelpdesk.DsHelpDesk.desktop",
+        "sed -i '/^Icon=/ c\\Icon=com.dshelpdesk.DsHelpDesk' /app/share/applications/dshelpdesk-link.desktop",
+        "mv /app/share/icons/hicolor/scalable/apps/dshelpdesk.svg /app/share/icons/hicolor/scalable/apps/com.dshelpdesk.DsHelpDesk.svg",
+        "for size in 16 24 32 48 64 128 256 512; do\n rsvg-convert -w $size -h $size -f png -o $size.png logo.svg\n install -Dm644 $size.png /app/share/icons/hicolor/${size}x${size}/apps/com.dshelpdesk.DsHelpDesk.png\n done"
       ],
       "cleanup": ["/include", "/lib/pkgconfig", "/share/gtk-doc"],
       "sources": [
         {
           "type": "file",
-          "path": "../rustdesk-1.2.4.deb"
+          "path": "../dshelpdesk-1.2.4.deb"
         },
         {
           "type": "file",

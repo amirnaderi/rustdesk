@@ -1,29 +1,29 @@
 <p align="center">
-  <img src="../res/logo-header.svg" alt="RustDesk - Ваш віддалений робочий стіл"><br>
+  <img src="../res/logo-header.svg" alt="DsHelpDesk - Ваш віддалений робочий стіл"><br>
   <a href="#безкоштовні-загальнодоступні-сервери">Сервери</a> •
   <a href="#первинні-кроки-для-складання">Складання</a> •
   <a href="#як-зібрати-за-допомогою-docker">Docker</a> •
   <a href="#структура-файлів">Структура</a> •
   <a href="#знімки">Знімки</a><br>
   [<a href="../README.md">English</a>] | [<a href="README-CS.md">česky</a>] | [<a href="README-ZH.md">中文</a>] | [<a href="README-HU.md">Magyar</a>] | [<a href="README-ES.md">Español</a>] | [<a href="README-FA.md">فارسی</a>] | [<a href="README-FR.md">Français</a>] | [<a href="README-DE.md">Deutsch</a>] | [<a href="README-PL.md">Polski</a>] | [<a href="README-ID.md">Indonesian</a>] | [<a href="README-FI.md">Suomi</a>] | [<a href="README-ML.md">മലയാളം</a>] | [<a href="README-JP.md">日本語</a>] | [<a href="README-NL.md">Nederlands</a>] | [<a href="README-IT.md">Italiano</a>] | [<a href="README-RU.md">Русский</a>] | [<a href="README-PTBR.md">Português (Brasil)</a>] | [<a href="README-EO.md">Esperanto</a>] | [<a href="README-KR.md">한국어</a>] | [<a href="README-AR.md">العربي</a>] | [<a href="README-VN.md">Tiếng Việt</a>] | [<a href="README-GR.md">Ελληνικά</a>]<br>
-  <b>Нам потрібна ваша допомога для перекладу цього README і <a href="https://github.com/rustdesk/rustdesk/tree/master/src/rustdesk/tree/master/src/lang">RustDesk UI</a> на вашу рідну мову</B>
+  <b>Нам потрібна ваша допомога для перекладу цього README і <a href="https://github.com/rustdesk/dshelpdesk/tree/master/src/dshelpdesk/tree/master/src/lang">DsHelpDesk UI</a> на вашу рідну мову</B>
 </p>
 
-Спілкування з нами: [Discord](https://discord.gg/nDceKgxnkV) | [Twitter](https://twitter.com/rustdesk) | [Reddit](https://www.reddit.com/r/rustdesk)
+Спілкування з нами: [Discord](https://discord.gg/nDceKgxnkV) | [Twitter](https://twitter.com/dshelpdesk) | [Reddit](https://www.reddit.com/r/dshelpdesk)
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/I2I04VU09)
 
-Ще одне програмне забезпечення для віддаленого робочого столу, написане на Rust. Працює з коробки, не потребує налаштування. Ви повністю контролюєте свої дані, не турбуючись про безпеку. Ви можете використовувати наш сервер ретрансляції, [налаштувати свій власний](https://rustdesk.com/server), або [написати свій власний сервер ретрансляції](https://github.com/rustdesk/rustdesk-server-demo).
+Ще одне програмне забезпечення для віддаленого робочого столу, написане на Rust. Працює з коробки, не потребує налаштування. Ви повністю контролюєте свої дані, не турбуючись про безпеку. Ви можете використовувати наш сервер ретрансляції, [налаштувати свій власний](https://dshelpdesk.com/server), або [написати свій власний сервер ретрансляції](https://github.com/rustdesk/dshelpdesk-server-demo).
 
 ![image](https://user-images.githubusercontent.com/71636191/171661982-430285f0-2e12-4b1d-9957-4a58e375304d.png)
 
-RustDesk вітає внесок кожного. Дивіться [`docs/CONTRIBUTING.md`](CONTRIBUTING.md) для допомоги на початку роботи.
+DsHelpDesk вітає внесок кожного. Дивіться [`docs/CONTRIBUTING.md`](CONTRIBUTING.md) для допомоги на початку роботи.
 
-[**FAQ**](https://github.com/rustdesk/rustdesk/wiki/FAQ)
+[**FAQ**](https://github.com/rustdesk/dshelpdesk/wiki/FAQ)
 
-[**Як працює RustDesk?**](https://github.com/rustdesk/rustdesk/wiki/How-does-RustDesk-work%3F)
+[**Як працює DsHelpDesk?**](https://github.com/rustdesk/dshelpdesk/wiki/How-does-DsHelpDesk-work%3F)
 
-[**ЗАВАНТАЖИТИ ЗАСТОСУНОК**](https://github.com/rustdesk/rustdesk/releases)
+[**ЗАВАНТАЖИТИ ЗАСТОСУНОК**](https://github.com/rustdesk/dshelpdesk/releases)
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
     alt="Get it on F-Droid"
@@ -39,7 +39,7 @@ RustDesk вітає внесок кожного. Дивіться [`docs/CONTRIB
 
 ## Dev Container
 
-[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Container&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/rustdesk/rustdesk)
+[![Open in Dev Containers](https://img.shields.io/static/v1?label=Dev%20Container&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/rustdesk/dshelpdesk)
 
 Якщо у вас уже встановлено VS Code і Docker, ви можете натиснути значок вище, щоб почати. Клацання призведе до того, що VS Code автоматично встановить розширення Dev Containers, якщо це необхідно, клонує виcхідний код у том контейнера та розгорне контейнер dev для використання.
 
@@ -123,8 +123,8 @@ cd
 ```sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
-git clone https://github.com/rustdesk/rustdesk
-cd rustdesk
+git clone https://github.com/rustdesk/dshelpdesk
+cd dshelpdesk
 mkdir -p target/debug
 wget https://raw.githubusercontent.com/c-smile/sciter-sdk/master/bin.lnx/x64/libsciter-gtk.so
 mv libsciter-gtk.so target/debug
@@ -133,50 +133,50 @@ VCPKG_ROOT=$HOME/vcpkg cargo run
 
 ### Змініть Wayland на X11 (Xorg)
 
-RustDesk не підтримує Wayland. Дивіться [цей документ](https://docs.fedoraproject.org/en-US/quick-docs/configuring-xorg-as-default-gnome-session/) для налаштування Xorg як сеансу GNOME за замовчуванням.
+DsHelpDesk не підтримує Wayland. Дивіться [цей документ](https://docs.fedoraproject.org/en-US/quick-docs/configuring-xorg-as-default-gnome-session/) для налаштування Xorg як сеансу GNOME за замовчуванням.
 
 ## Як зібрати за допомогою Docker
 
 Почніть з клонування сховища та створення docker-контейнера:
 
 ```sh
-git clone https://github.com/rustdesk/rustdesk
-cd rustdesk
-docker build -t "rustdesk-builder" .
+git clone https://github.com/rustdesk/dshelpdesk
+cd dshelpdesk
+docker build -t "dshelpdesk-builder" .
 ```
 
 Потім кожного разу, коли вам потрібно зібрати додаток, запускайте таку команду:
 
 ```sh
-docker run --rm -it -v $PWD:/home/user/rustdesk -v rustdesk-git-cache:/home/user/.cargo/git -v rustdesk-registry-cache:/home/user/.cargo/registry -e PUID="$(id -u)" -e PGID="$(id -g)" rustdesk-builder
+docker run --rm -it -v $PWD:/home/user/dshelpdesk -v dshelpdesk-git-cache:/home/user/.cargo/git -v dshelpdesk-registry-cache:/home/user/.cargo/registry -e PUID="$(id -u)" -e PGID="$(id -g)" dshelpdesk-builder
 ```
 
 Зверніть увагу, що перша збірка може зайняти більше часу, перш ніж залежності будуть кешовані, але наступні збірки будуть виконуватися швидше. Крім того, якщо вам потрібно вказати інші аргументи для команди збірки, ви можете зробити це в кінці команди у змінній `<OPTIONAL-ARGS>`. Наприклад, якщо ви хочете створити оптимізовану версію, ви маєте запустити наведену вище команду і в кінці рядка додати `--release`. Отриманий виконуваний файл буде доступний у цільовій папці вашої системи і може бути запущений за допомогою:
 
 ```sh
-target/debug/rustdesk
+target/debug/dshelpdesk
 ```
 
 Або, якщо ви використовуєте виконуваний файл релізу:
 
 ```sh
-target/release/rustdesk
+target/release/dshelpdesk
 ```
 
-Будь ласка, переконайтеся, що ви запускаєте ці команди з кореня сховища RustDesk, інакше додаток не зможе знайти необхідні ресурси. Також зверніть увагу, що інші cargo підкоманди, такі як `install` або `run`, наразі не підтримуються цим методом, оскільки вони будуть встановлювати або запускати програму всередині контейнера, а не на хості.
+Будь ласка, переконайтеся, що ви запускаєте ці команди з кореня сховища DsHelpDesk, інакше додаток не зможе знайти необхідні ресурси. Також зверніть увагу, що інші cargo підкоманди, такі як `install` або `run`, наразі не підтримуються цим методом, оскільки вони будуть встановлювати або запускати програму всередині контейнера, а не на хості.
 
 ## Структура файлів
 
-- **[libs/hbb_common](https://github.com/rustdesk/rustdesk/tree/master/libs/hbb_common)**: відеокодек, конфіг, обгортка tcp/udp, protobuf, функції fs для передавання файлів і деякі інші службові функції
-- **[libs/scrap](https://github.com/rustdesk/rustdesk/tree/master/libs/scrap)**: захоплення екрана
-- **[libs/enigo](https://github.com/rustdesk/rustdesk/tree/master/libs/enigo)**: специфічне для платформи керування клавіатурою/мишею
-- **[src/ui](https://github.com/rustdesk/rustdesk/tree/master/src/ui)**: графічний інтерфейс користувача
-- **[src/server](https://github.com/rustdesk/rustdesk/tree/master/src/server)**: сервіси аудіо/буфера обміну/вводу/відео та мережевих підключень
-- **[src/client.rs](https://github.com/rustdesk/rustdesk/tree/master/src/client.rs)**: однорангове з'єднання
-- **[src/rendezvous_mediator.rs](https://github.com/rustdesk/rustdesk/tree/master/src/rendezvous_mediator.rs)**: комунікація з [rustdesk-server](https://github.com/rustdesk/rustdesk-server), очікування віддаленого прямого (обхід TCP NAT) або ретрансльованого з'єднання
-- **[src/platform](https://github.com/rustdesk/rustdesk/tree/master/src/platform)**: специфічний для платформи код
-- **[flutter](https://github.com/rustdesk/rustdesk/tree/master/flutter)**: код Flutter для мобільних пристроїв 
-- **[flutter/web/js](https://github.com/rustdesk/rustdesk/tree/master/flutter/web/js)**: JavaScript для Flutter веб клієнту
+- **[libs/hbb_common](https://github.com/rustdesk/dshelpdesk/tree/master/libs/hbb_common)**: відеокодек, конфіг, обгортка tcp/udp, protobuf, функції fs для передавання файлів і деякі інші службові функції
+- **[libs/scrap](https://github.com/rustdesk/dshelpdesk/tree/master/libs/scrap)**: захоплення екрана
+- **[libs/enigo](https://github.com/rustdesk/dshelpdesk/tree/master/libs/enigo)**: специфічне для платформи керування клавіатурою/мишею
+- **[src/ui](https://github.com/rustdesk/dshelpdesk/tree/master/src/ui)**: графічний інтерфейс користувача
+- **[src/server](https://github.com/rustdesk/dshelpdesk/tree/master/src/server)**: сервіси аудіо/буфера обміну/вводу/відео та мережевих підключень
+- **[src/client.rs](https://github.com/rustdesk/dshelpdesk/tree/master/src/client.rs)**: однорангове з'єднання
+- **[src/rendezvous_mediator.rs](https://github.com/rustdesk/dshelpdesk/tree/master/src/rendezvous_mediator.rs)**: комунікація з [dshelpdesk-server](https://github.com/rustdesk/dshelpdesk-server), очікування віддаленого прямого (обхід TCP NAT) або ретрансльованого з'єднання
+- **[src/platform](https://github.com/rustdesk/dshelpdesk/tree/master/src/platform)**: специфічний для платформи код
+- **[flutter](https://github.com/rustdesk/dshelpdesk/tree/master/flutter)**: код Flutter для мобільних пристроїв 
+- **[flutter/web/js](https://github.com/rustdesk/dshelpdesk/tree/master/flutter/web/js)**: JavaScript для Flutter веб клієнту
 
 ## Знімки
 

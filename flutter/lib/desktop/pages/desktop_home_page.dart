@@ -327,7 +327,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
           "Status",
           "There is a newer version of ${bind.mainGetAppNameSync()} ${bind.mainGetNewVersion()} available.",
           "Click to download", () async {
-        final Uri url = Uri.parse('https://rustdesk.com/download');
+        final Uri url = Uri.parse('https://dshelpdesk.com/download');
         await launchUrl(url);
       }, closeButton: true);
     }
@@ -382,12 +382,12 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         return buildInstallCard(
             "Warning", "wayland_experiment_tip", "", () async {},
             help: 'Help',
-            link: 'https://rustdesk.com/docs/en/manual/linux/#x11-required');
+            link: 'https://dshelpdesk.com/docs/en/manual/linux/#x11-required');
       } else if (bind.mainIsLoginWayland()) {
         return buildInstallCard("Warning",
             "Login screen using Wayland is not supported", "", () async {},
             help: 'Help',
-            link: 'https://rustdesk.com/docs/en/manual/linux/#login-screen');
+            link: 'https://dshelpdesk.com/docs/en/manual/linux/#login-screen');
       }
     }
     return Container();

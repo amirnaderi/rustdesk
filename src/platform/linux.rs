@@ -255,19 +255,19 @@ fn set_x11_env(desktop: &Desktop) {
 }
 
 #[inline]
-fn stop_rustdesk_servers() {
+fn stop_dshelpdesk_servers() {
     let _ = run_cmds(&format!(
-        r##"ps -ef | grep -E 'rustdesk +--server' | awk '{{printf("kill -9 %d\n", $2)}}' | bash"##,
+        r##"ps -ef | grep -E 'dshelpdesk +--server' | awk '{{printf("kill -9 %d\n", $2)}}' | bash"##,
     ));
 }
 
 #[inline]
 fn stop_subprocess() {
     let _ = run_cmds(&format!(
-        r##"ps -ef | grep '/etc/rustdesk/xorg.conf' | grep -v grep | awk '{{printf("kill -9 %d\n", $2)}}' | bash"##,
+        r##"ps -ef | grep '/etc/dshelpdesk/xorg.conf' | grep -v grep | awk '{{printf("kill -9 %d\n", $2)}}' | bash"##,
     ));
     let _ = run_cmds(&format!(
-        r##"ps -ef | grep -E 'rustdesk +--cm-no-ui' | grep -v grep | awk '{{printf("kill -9 %d\n", $2)}}' | bash"##,
+        r##"ps -ef | grep -E 'dshelpdesk +--cm-no-ui' | grep -v grep | awk '{{printf("kill -9 %d\n", $2)}}' | bash"##,
     ));
 }
 
@@ -334,15 +334,15 @@ fn should_start_server(
 }
 
 // to-do: stop_server(&mut user_server); may not stop child correctly
-// stop_rustdesk_servers() is just a temp solution here.
+// stop_dshelpdesk_servers() is just a temp solution here.
 fn force_stop_server() {
-    stop_rustdesk_servers();
+    stop_dshelpdesk_servers();
     sleep_millis(super::SERVICE_INTERVAL);
 }
 
 pub fn start_os_service() {
     check_if_stop_service();
-    stop_rustdesk_servers();
+    stop_dshelpdesk_servers();
     stop_subprocess();
     start_uinput_service();
 
@@ -420,7 +420,7 @@ pub fn start_os_service() {
         let keeps_headless = sid.is_empty() && desktop.is_headless();
         let keeps_session = sid == desktop.sid;
         if keeps_headless || keeps_session {
-            // for fixing https://github.com/rustdesk/rustdesk/issues/3129 to avoid too much dbus calling,
+            // for fixing https://github.com/rustdesk/dshelpdesk/issues/3129 to avoid too much dbus calling,
             sleep_millis(500);
         } else {
             sleep_millis(super::SERVICE_INTERVAL);
@@ -704,16 +704,16 @@ pub fn exec_privileged(args: &[&str]) -> ResultType<Child> {
 }
 
 pub fn check_super_user_permission() -> ResultType<bool> {
-    let file = "/usr/share/rustdesk/files/polkit";
+    let file = "/usr/share/dshelpdesk/files/polkit";
     let arg;
     if Path::new(file).is_file() {
         arg = file;
     } else {
         arg = "echo";
     }
-    // https://github.com/rustdesk/rustdesk/issues/2756
+    // https://github.com/rustdesk/dshelpdesk/issues/2756
     if let Ok(status) = Command::new("pkexec").arg(arg).status() {
-        // https://github.com/rustdesk/rustdesk/issues/5205#issuecomment-1658059657s
+        // https://github.com/rustdesk/dshelpdesk/issues/5205#issuecomment-1658059657s
         Ok(status.code() != Some(126) && status.code() != Some(127))
     } else {
         Ok(true)
@@ -921,7 +921,7 @@ mod desktop {
     const IBUS_DAEMON: &str = "ibus-daemon";
     const PLASMA_KDED5: &str = "kded5";
     const GNOME_GOA_DAEMON: &str = "goa-daemon";
-    const RUSTDESK_TRAY: &str = "rustdesk +--tray";
+    const RUSTDESK_TRAY: &str = "dshelpdesk +--tray";
 
     #[derive(Debug, Clone, Default)]
     pub struct Desktop {
@@ -931,7 +931,7 @@ mod desktop {
         pub protocal: String,
         pub display: String,
         pub xauth: String,
-        pub is_rustdesk_subprocess: bool,
+        pub is_dshelpdesk_subprocess: bool,
     }
 
     impl Desktop {
@@ -947,7 +947,7 @@ mod desktop {
 
         #[inline]
         pub fn is_headless(&self) -> bool {
-            self.sid.is_empty() || self.is_rustdesk_subprocess
+            self.sid.is_empty() || self.is_dshelpdesk_subprocess
         }
 
         fn get_display_xauth_xwayland(&mut self) {
@@ -1135,11 +1135,11 @@ mod desktop {
         }
 
         fn set_is_subprocess(&mut self) {
-            self.is_rustdesk_subprocess = false;
-            let cmd = "ps -ef | grep 'rustdesk/xorg.conf' | grep -v grep | wc -l";
+            self.is_dshelpdesk_subprocess = false;
+            let cmd = "ps -ef | grep 'dshelpdesk/xorg.conf' | grep -v grep | wc -l";
             if let Ok(res) = run_cmds(cmd) {
                 if res.trim() != "0" {
-                    self.is_rustdesk_subprocess = true;
+                    self.is_dshelpdesk_subprocess = true;
                 }
             }
         }
@@ -1149,7 +1149,7 @@ mod desktop {
                 // Xwayland display and xauth may not be available in a short time after login.
                 if is_xwayland_running() && !self.is_login_wayland() {
                     self.get_display_xauth_xwayland();
-                    self.is_rustdesk_subprocess = false;
+                    self.is_dshelpdesk_subprocess = false;
                 }
                 return;
             }
@@ -1157,7 +1157,7 @@ mod desktop {
             let seat0_values = get_values_of_seat0(&[0, 1, 2]);
             if seat0_values[0].is_empty() {
                 *self = Self::default();
-                self.is_rustdesk_subprocess = false;
+                self.is_dshelpdesk_subprocess = false;
                 return;
             }
 
@@ -1168,7 +1168,7 @@ mod desktop {
             if self.is_login_wayland() {
                 self.display = "".to_owned();
                 self.xauth = "".to_owned();
-                self.is_rustdesk_subprocess = false;
+                self.is_dshelpdesk_subprocess = false;
                 return;
             }
 
@@ -1179,7 +1179,7 @@ mod desktop {
                     self.display = "".to_owned();
                     self.xauth = "".to_owned();
                 }
-                self.is_rustdesk_subprocess = false;
+                self.is_dshelpdesk_subprocess = false;
             } else {
                 self.get_display_x11();
                 self.get_xauth_x11();
@@ -1245,7 +1245,7 @@ fn switch_service(stop: bool) -> String {
     let home = std::env::var("HOME").unwrap_or_default();
     Config::set_option("stop-service".into(), if stop { "Y" } else { "" }.into());
     if home != "/root" && !Config::get().is_empty() {
-        format!("cp -f {home}/.config/rustdesk/RustDesk.toml /root/.config/rustdesk/; cp -f {home}/.config/rustdesk/RustDesk2.toml /root/.config/rustdesk/;")
+        format!("cp -f {home}/.config/dshelpdesk/DsHelpDesk.toml /root/.config/dshelpdesk/; cp -f {home}/.config/dshelpdesk/DsHelpDesk2.toml /root/.config/dshelpdesk/;")
     } else {
         "".to_owned()
     }
@@ -1258,7 +1258,7 @@ pub fn uninstall_service(show_new_window: bool) -> bool {
     log::info!("Uninstalling service...");
     let cp = switch_service(true);
     if !run_cmds_pkexec(&format!(
-        "systemctl disable rustdesk; systemctl stop rustdesk; {cp}"
+        "systemctl disable dshelpdesk; systemctl stop dshelpdesk; {cp}"
     )) {
         Config::set_option("stop-service".into(), "".into());
         return true;
@@ -1277,7 +1277,7 @@ pub fn install_service() -> bool {
     log::info!("Installing service...");
     let cp = switch_service(false);
     if !run_cmds_pkexec(&format!(
-        "{cp} systemctl enable rustdesk; systemctl start rustdesk;"
+        "{cp} systemctl enable dshelpdesk; systemctl start dshelpdesk;"
     )) {
         Config::set_option("stop-service".into(), "Y".into());
         return true;
@@ -1289,7 +1289,7 @@ pub fn install_service() -> bool {
 fn check_if_stop_service() {
     if Config::get_option("stop-service".into()) == "Y" {
         allow_err!(run_cmds(
-            "systemctl disable rustdesk; systemctl stop rustdesk"
+            "systemctl disable dshelpdesk; systemctl stop dshelpdesk"
         ));
     }
 }
@@ -1297,7 +1297,7 @@ fn check_if_stop_service() {
 pub fn check_autostart_config() -> ResultType<()> {
     let home = std::env::var("HOME").unwrap_or_default();
     let path = format!("{home}/.config/autostart");
-    let file = format!("{path}/rustdesk.desktop");
+    let file = format!("{path}/dshelpdesk.desktop");
     std::fs::create_dir_all(&path).ok();
     if !Path::new(&file).exists() {
         // write text to the desktop file
@@ -1306,7 +1306,7 @@ pub fn check_autostart_config() -> ResultType<()> {
             "
 [Desktop Entry]
 Type=Application
-Exec=rustdesk --tray
+Exec=dshelpdesk --tray
 NoDisplay=false
         "
             .as_bytes(),

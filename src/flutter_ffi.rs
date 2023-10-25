@@ -754,6 +754,14 @@ pub fn main_get_options_sync() -> SyncReturn<String> {
     SyncReturn(get_options())
 }
 
+pub fn main_get_custom_options() -> String {
+    get_custom_options()
+}
+
+pub fn main_get_custom_options_sync() -> SyncReturn<String> {
+    SyncReturn(get_custom_options())
+}
+
 pub fn main_set_options(json: String) {
     let map: HashMap<String, String> = serde_json::from_str(&json).unwrap_or(HashMap::new());
     if !map.is_empty() {

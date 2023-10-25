@@ -6,7 +6,7 @@ import 'package:flutter_hbb/main.dart';
 
 enum SystemWindowTheme { light, dark }
 
-/// The platform channel for RustDesk.
+/// The platform channel for DsHelpDesk.
 class RdPlatformChannel {
   RdPlatformChannel._();
 
@@ -15,7 +15,7 @@ class RdPlatformChannel {
   static RdPlatformChannel get instance => _windowUtil;
 
   final MethodChannel _osxMethodChannel =
-      MethodChannel("org.rustdesk.rustdesk/macos");
+      MethodChannel("org.dshelpdesk.dshelpdesk/macos");
 
   /// Change the theme of the system window
   Future<void> changeSystemWindowTheme(SystemWindowTheme theme) {

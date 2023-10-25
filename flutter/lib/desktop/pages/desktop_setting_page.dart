@@ -1056,7 +1056,7 @@ class _NetworkState extends State<_Network> with AutomaticKeepAliveClientMixin {
     tmpWrapper() {
       // Setting page is not modal, oldOptions should only be used when getting options, never when setting.
       Map<String, dynamic> oldOptions =
-          jsonDecode(bind.mainGetOptionsSync() as String);
+          jsonDecode(bind.mainGetOptionsSync());
       old(String key) {
         return (oldOptions[key] ?? '').trim();
       }
@@ -1100,23 +1100,22 @@ class _NetworkState extends State<_Network> with AutomaticKeepAliveClientMixin {
 
       bool secure = !enabled;
       return _Card(
-          title: 'ID/Relay Server',
-          title_suffix: ServerConfigImportExportWidgets(controllers, errMsgs),
+          title: 'ID/Relay Server',          
           children: [
             Column(
               children: [
-                Obx(() => _LabeledTextField(context, 'ID Server', idController,
-                    idErrMsg.value, enabled, secure)),
-                Obx(() => _LabeledTextField(context, 'Relay Server',
-                    relayController, relayErrMsg.value, enabled, secure)),
-                Obx(() => _LabeledTextField(context, 'API Server',
-                    apiController, apiErrMsg.value, enabled, secure)),
-                _LabeledTextField(
-                    context, 'Key', keyController, '', enabled, secure),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [_Button('Apply', submit, enabled: enabled)],
-                ).marginOnly(top: 10),
+                // Obx(() => _LabeledTextField(context, 'ID Server', idController,
+                //     idErrMsg.value, enabled, secure)),
+                // Obx(() => _LabeledTextField(context, 'Relay Server',
+                //     relayController, relayErrMsg.value, enabled, secure)),
+                // Obx(() => _LabeledTextField(context, 'API Server',
+                //     apiController, apiErrMsg.value, enabled, secure)),
+                // _LabeledTextField(
+                //     context, 'Key', keyController, '', enabled, secure),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [_Button('Apply', submit, enabled: true)],
+                // ).marginOnly(top: 10),
               ],
             )
           ]);

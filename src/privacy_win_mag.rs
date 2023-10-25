@@ -31,9 +31,9 @@ use winapi::{
 };
 
 pub const ORIGIN_PROCESS_EXE: &'static str = "C:\\Windows\\System32\\RuntimeBroker.exe";
-pub const WIN_MAG_INJECTED_PROCESS_EXE: &'static str = "RuntimeBroker_rustdesk.exe";
+pub const WIN_MAG_INJECTED_PROCESS_EXE: &'static str = "RuntimeBroker_dshelpdesk.exe";
 pub const INJECTED_PROCESS_EXE: &'static str = WIN_MAG_INJECTED_PROCESS_EXE;
-pub const PRIVACY_WINDOW_NAME: &'static str = "RustDeskPrivacyWindow";
+pub const PRIVACY_WINDOW_NAME: &'static str = "DsHelpDeskPrivacyWindow";
 
 pub const OCCUPIED: &'static str = "Privacy occupied by another one";
 pub const TURN_OFF_OTHER_ID: &'static str =

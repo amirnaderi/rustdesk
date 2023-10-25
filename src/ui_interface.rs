@@ -71,6 +71,7 @@ lazy_static::lazy_static! {
 lazy_static::lazy_static! {
     static ref OPTION_SYNCED: Arc<Mutex<bool>> = Default::default();
     static ref OPTIONS : Arc<Mutex<HashMap<String, String>>> = Arc::new(Mutex::new(Config::get_options()));
+    static ref OPTIONS2 : Arc<Mutex<HashMap<String, String>>> = Arc::new(Mutex::new(Config::get_custom_options()));
     pub static ref SENDER : Mutex<mpsc::UnboundedSender<ipc::Data>> = Mutex::new(check_connect_status(true));
     static ref CHILDREN : Children = Default::default();
 }
@@ -256,6 +257,25 @@ pub fn get_options() -> String {
         #[cfg(any(target_os = "android", target_os = "ios"))]
         {
             Config::get_options()
+        }
+    };
+    let mut m = serde_json::Map::new();
+    for (k, v) in options.iter() {
+        m.insert(k.into(), v.to_owned().into());
+    }
+    serde_json::to_string(&m).unwrap_or_default()
+}
+
+#[inline]
+pub fn get_custom_options() -> String {
+    let options = {
+        #[cfg(not(any(target_os = "android", target_os = "ios")))]
+        {
+            OPTIONS2.lock().unwrap()
+        }
+        #[cfg(any(target_os = "android", target_os = "ios"))]
+        {
+            Config::get_custom_options()
         }
     };
     let mut m = serde_json::Map::new();
@@ -748,7 +768,7 @@ pub fn default_video_save_directory() -> String {
     #[cfg(any(target_os = "android", target_os = "ios"))]
     if let Ok(home) = config::APP_HOME_DIR.read() {
         let mut path = home.to_owned();
-        path.push_str("/RustDesk/ScreenRecord");
+        path.push_str("/DsHelpDesk/ScreenRecord");
         let dir = try_create(&std::path::Path::new(&path));
         if !dir.is_empty() {
             return dir;
