@@ -48,15 +48,15 @@ def parse_rc_features(feature):
     available_features = {
         'IddDriver': {
             'platform': ['windows'],
-            'zip_url': 'https://github.com/fufesou/DsHelpDeskIddDriver/releases/download/v0.3/DsHelpDeskIddDriver_x64.zip',
-            'checksum_url': 'https://github.com/fufesou/DsHelpDeskIddDriver/releases/download/v0.3/checksum_md5',
+            'zip_url': 'https://github.com/fufesou/RustDeskIddDriver/releases/download/v0.3/DsHelpDeskIddDriver_x64.zip',
+            'checksum_url': 'https://github.com/fufesou/RustDeskIddDriver/releases/download/v0.3/checksum_md5',
             'exclude': ['README.md', 'certmgr.exe', 'install_cert_runas_admin.bat', 'DsHelpDeskIddApp.exe'],
         },
         'PrivacyMode': {
             'platform': ['windows'],
-            'zip_url': 'https://github.com/fufesou/DsHelpDeskTempTopMostWindow/releases/download/v0.1'
+            'zip_url': 'https://github.com/fufesou/RustDeskTempTopMostWindow/releases/download/v0.1'
                        '/TempTopMostWindow_x64_pic_en.zip',
-            'checksum_url': 'https://github.com/fufesou/DsHelpDeskTempTopMostWindow/releases/download/v0.1/checksum_md5',
+            'checksum_url': 'https://github.com/fufesou/RustDeskTempTopMostWindow/releases/download/v0.1/checksum_md5',
             'include': ['WindowInjection.dll'],
         }
     }

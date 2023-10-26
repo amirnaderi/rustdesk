@@ -904,18 +904,18 @@ impl Config {
     }
 
     pub fn get_custom_options() -> HashMap<String, String> {
-        let mut result = Vec::new();
-        for line in read_to_string("daf_config").unwrap().lines() {
-            result.push(line.to_string())
-        }
+        // let mut result = Vec::new();
+        // for line in read_to_string("daf_config").unwrap().lines() {
+        //     result.push(line.to_string())
+        // }
 
         let mut config_options: HashMap<String, String> = HashMap::new();
-        config_options.insert("custom-rendezvous-server".to_string(), result[0].to_string());
-        config_options.insert("key".to_string(), result[1].to_string());
+        // config_options.insert("custom-rendezvous-server".to_string(), result[0].to_string());
+        // config_options.insert("key".to_string(), result[1].to_string());
         
     
-        log::info!("{}",result[0].to_string());
-        log::info!("{}",result[1].to_string());
+        // log::info!("{}",result[0].to_string());
+        // log::info!("{}",result[1].to_string());
         return  config_options;
     }
 

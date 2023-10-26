@@ -647,8 +647,7 @@ impl sciter::EventHandler for UI {
         fn get_error();
         fn is_login_wayland();
         fn current_is_wayland();
-        fn get_options();
-        fn get_custom_options();
+        fn get_options();        
         fn get_option(String);
         fn get_local_option(String);
         fn set_local_option(String, String);
