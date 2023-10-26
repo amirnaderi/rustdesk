@@ -22,8 +22,16 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:window_size/window_size.dart' as window_size;
 
+import '../../common/formatter/id_formatter.dart';
 import '../widgets/button.dart';
 
+class IDTextEditingController extends TextEditingController {
+  IDTextEditingController({String? text}) : super(text: text);
+
+  String get id => trimID(value.text);
+
+  set id(String newID) => text = formatID(newID);
+}
 class DesktopHomePage extends StatefulWidget {
   const DesktopHomePage({Key? key}) : super(key: key);
 
@@ -300,6 +308,7 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _buildUserCustomLoginTextField(context),
           Text(
             translate("Your Desktop"),
             style: Theme.of(context).textTheme.titleLarge,
@@ -319,6 +328,132 @@ class _DesktopHomePageState extends State<DesktopHomePage>
         ],
       ),
     );
+  }
+
+  final _userNameController = IDTextEditingController();
+  final _passController = IDTextEditingController();
+
+  final RxBool _userNameInputFocused = false.obs;
+  final RxBool _passwordInputFocused = false.obs;
+
+  final FocusNode _userNameFocusNode = FocusNode();
+  final FocusNode _passwordFocusNode = FocusNode();
+
+  /// Callback for the Login button.
+  /// Connects to the Custom login API
+  void onLogin({bool isLogin = false}) {
+  }
+
+Widget _buildUserCustomLoginTextField(BuildContext context) {
+    var w = Container(
+      width: 320 + 20 * 2,
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+      decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(13)),
+          border: Border.all(color: Theme.of(context).colorScheme.background)),
+      child: Ink(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: AutoSizeText(
+                    translate('Login'),
+                    maxLines: 1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.merge(TextStyle(height: 1)),
+                  ),
+                ),
+              ],
+            ).marginOnly(bottom: 15),
+            Row(
+              children: [
+                Expanded(
+                  child: Obx(
+                    () => TextField(
+                      maxLength: 90,
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      keyboardType: TextInputType.visiblePassword,
+                      focusNode: _userNameFocusNode,
+                      style: const TextStyle(
+                        fontFamily: 'WorkSans',
+                        fontSize: 15,
+                        height: 1.4,
+                      ),
+                      maxLines: 1,
+                      cursorColor:
+                          Theme.of(context).textTheme.titleLarge?.color,
+                      decoration: InputDecoration(
+                          filled: false,
+                          counterText: '',
+                          hintText: _userNameInputFocused.value
+                              ? null
+                              : 'User Name',
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 13)),
+                      controller: _userNameController
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 13.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                  child: Obx(
+                    () => TextField(
+                      maxLength: 90,
+                      autocorrect: false,
+                      enableSuggestions: false,
+                      keyboardType: TextInputType.visiblePassword,
+                      focusNode: _passwordFocusNode,
+                      style: const TextStyle(
+                        fontFamily: 'WorkSans',
+                        fontSize: 15,
+                        height: 1.4,
+                      ),
+                      maxLines: 1,
+                      cursorColor:
+                          Theme.of(context).textTheme.titleLarge?.color,
+                      decoration: InputDecoration(
+                          filled: false,
+                          counterText: '',
+                          hintText: _passwordInputFocused.value
+                              ? null
+                              : 'Password',
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 13)),
+                      controller: _passController,                      
+                    ),
+                  ),
+                ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 13.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const SizedBox(
+                    width: 17,
+                  ),
+                  Button(onTap: onLogin, text: "Login"),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+    return Container(
+        constraints: const BoxConstraints(maxWidth: 600), child: w);
   }
 
   Future<Widget> buildHelpCards() async {

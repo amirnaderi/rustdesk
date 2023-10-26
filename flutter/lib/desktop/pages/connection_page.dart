@@ -120,9 +120,11 @@ class _ConnectionPageState extends State<ConnectionPage>
             child: Column(
           children: [
             Row(
-              children: [
+              children: [                
                 Flexible(child: _buildRemoteIDTextField(context)),
               ],
+
+              
             ).marginOnly(top: 22),
             SizedBox(height: 12),
             Divider().paddingOnly(right: 12),
@@ -228,6 +230,7 @@ class _ConnectionPageState extends State<ConnectionPage>
     return Container(
         constraints: const BoxConstraints(maxWidth: 600), child: w);
   }
+
 
   Widget buildStatus() {
     final em = 14.0;
