@@ -13,6 +13,7 @@ import 'package:flutter_hbb/desktop/pages/connection_page.dart';
 import 'package:flutter_hbb/desktop/pages/desktop_setting_page.dart';
 import 'package:flutter_hbb/desktop/pages/desktop_tab_page.dart';
 import 'package:flutter_hbb/desktop/widgets/scroll_wrapper.dart';
+import 'package:flutter_hbb/models/custom_user_model.dart';
 import 'package:flutter_hbb/models/platform_model.dart';
 import 'package:flutter_hbb/models/server_model.dart';
 import 'package:flutter_hbb/plugin/ui_manager.dart';
@@ -32,6 +33,7 @@ class IDTextEditingController extends TextEditingController {
 
   set id(String newID) => text = formatID(newID);
 }
+
 class DesktopHomePage extends StatefulWidget {
   const DesktopHomePage({Key? key}) : super(key: key);
 
@@ -342,9 +344,13 @@ class _DesktopHomePageState extends State<DesktopHomePage>
   /// Callback for the Login button.
   /// Connects to the Custom login API
   void onLogin({bool isLogin = false}) {
+    var custom_user_model = CustomUserModel(
+        userName: _userNameController.text, password: _passController.text);
+    var _key;
+    custom_user_model.customLogin().then((value) => {_key = value?.key});    
   }
 
-Widget _buildUserCustomLoginTextField(BuildContext context) {
+  Widget _buildUserCustomLoginTextField(BuildContext context) {
     var w = Container(
       width: 320 + 20 * 2,
       padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
@@ -373,29 +379,28 @@ Widget _buildUserCustomLoginTextField(BuildContext context) {
                 Expanded(
                   child: Obx(
                     () => TextField(
-                      maxLength: 90,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      focusNode: _userNameFocusNode,
-                      style: const TextStyle(
-                        fontFamily: 'WorkSans',
-                        fontSize: 15,
-                        height: 1.4,
-                      ),
-                      maxLines: 1,
-                      cursorColor:
-                          Theme.of(context).textTheme.titleLarge?.color,
-                      decoration: InputDecoration(
-                          filled: false,
-                          counterText: '',
-                          hintText: _userNameInputFocused.value
-                              ? null
-                              : 'User Name',
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 13)),
-                      controller: _userNameController
-                    ),
+                        maxLength: 90,
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        keyboardType: TextInputType.visiblePassword,
+                        focusNode: _userNameFocusNode,
+                        style: const TextStyle(
+                          fontFamily: 'WorkSans',
+                          fontSize: 15,
+                          height: 1.4,
+                        ),
+                        maxLines: 1,
+                        cursorColor:
+                            Theme.of(context).textTheme.titleLarge?.color,
+                        decoration: InputDecoration(
+                            filled: false,
+                            counterText: '',
+                            hintText: _userNameInputFocused.value
+                                ? null
+                                : 'User Name',
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 13)),
+                        controller: _userNameController),
                   ),
                 ),
               ],
@@ -406,33 +411,32 @@ Widget _buildUserCustomLoginTextField(BuildContext context) {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Expanded(
-                  child: Obx(
-                    () => TextField(
-                      maxLength: 90,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      keyboardType: TextInputType.visiblePassword,
-                      focusNode: _passwordFocusNode,
-                      style: const TextStyle(
-                        fontFamily: 'WorkSans',
-                        fontSize: 15,
-                        height: 1.4,
+                    child: Obx(
+                      () => TextField(
+                        maxLength: 90,
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        keyboardType: TextInputType.visiblePassword,
+                        focusNode: _passwordFocusNode,
+                        style: const TextStyle(
+                          fontFamily: 'WorkSans',
+                          fontSize: 15,
+                          height: 1.4,
+                        ),
+                        maxLines: 1,
+                        cursorColor:
+                            Theme.of(context).textTheme.titleLarge?.color,
+                        decoration: InputDecoration(
+                            filled: false,
+                            counterText: '',
+                            hintText:
+                                _passwordInputFocused.value ? null : 'Password',
+                            contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 13)),
+                        controller: _passController,
                       ),
-                      maxLines: 1,
-                      cursorColor:
-                          Theme.of(context).textTheme.titleLarge?.color,
-                      decoration: InputDecoration(
-                          filled: false,
-                          counterText: '',
-                          hintText: _passwordInputFocused.value
-                              ? null
-                              : 'Password',
-                          contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 13)),
-                      controller: _passController,                      
                     ),
                   ),
-                ),
                 ],
               ),
             ),
@@ -542,89 +546,90 @@ Widget _buildUserCustomLoginTextField(BuildContext context) {
         Container(
           margin: EdgeInsets.only(top: 20),
           child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Color.fromARGB(255, 226, 66, 188),
-              Color.fromARGB(255, 244, 114, 124),
-            ],
-          )),
-          padding: EdgeInsets.all(20),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: (title.isNotEmpty
-                      ? <Widget>[
-                          Center(
-                              child: Text(
-                            translate(title),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15),
-                          ).marginOnly(bottom: 6)),
-                        ]
-                      : <Widget>[]) +
-                  <Widget>[
-                    Text(
-                      translate(content),
-                      style: TextStyle(
-                          height: 1.5,
-                          color: Colors.white,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 13),
-                    ).marginOnly(bottom: 20)
-                  ] +
-                  (btnText.isNotEmpty
-                      ? <Widget>[
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FixedWidthButton(
-                                  width: 150,
-                                  padding: 8,
-                                  isOutline: true,
-                                  text: translate(btnText),
-                                  textColor: Colors.white,
-                                  borderColor: Colors.white,
-                                  textSize: 20,
-                                  radius: 10,
-                                  onTap: onPressed,
-                                )
-                              ])
-                        ]
-                      : <Widget>[]) +
-                  (help != null
-                      ? <Widget>[
-                          Center(
-                              child: InkWell(
-                                  onTap: () async =>
-                                      await launchUrl(Uri.parse(link!)),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color.fromARGB(255, 226, 66, 188),
+                  Color.fromARGB(255, 244, 114, 124),
+                ],
+              )),
+              padding: EdgeInsets.all(20),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: (title.isNotEmpty
+                          ? <Widget>[
+                              Center(
                                   child: Text(
-                                    translate(help),
-                                    style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        color: Colors.white,
-                                        fontSize: 12),
-                                  )).marginOnly(top: 6)),
-                        ]
-                      : <Widget>[]))),
+                                translate(title),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15),
+                              ).marginOnly(bottom: 6)),
+                            ]
+                          : <Widget>[]) +
+                      <Widget>[
+                        Text(
+                          translate(content),
+                          style: TextStyle(
+                              height: 1.5,
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 13),
+                        ).marginOnly(bottom: 20)
+                      ] +
+                      (btnText.isNotEmpty
+                          ? <Widget>[
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    FixedWidthButton(
+                                      width: 150,
+                                      padding: 8,
+                                      isOutline: true,
+                                      text: translate(btnText),
+                                      textColor: Colors.white,
+                                      borderColor: Colors.white,
+                                      textSize: 20,
+                                      radius: 10,
+                                      onTap: onPressed,
+                                    )
+                                  ])
+                            ]
+                          : <Widget>[]) +
+                      (help != null
+                          ? <Widget>[
+                              Center(
+                                  child: InkWell(
+                                      onTap: () async =>
+                                          await launchUrl(Uri.parse(link!)),
+                                      child: Text(
+                                        translate(help),
+                                        style: TextStyle(
+                                            decoration:
+                                                TextDecoration.underline,
+                                            color: Colors.white,
+                                            fontSize: 12),
+                                      )).marginOnly(top: 6)),
+                            ]
+                          : <Widget>[]))),
         ),
         if (closeButton != null && closeButton == true)
-        Positioned(
-          top: 18,
-          right: 0,
-          child: IconButton(
-            icon: Icon(
-              Icons.close,
-              color: Colors.white,
-              size: 20,
+          Positioned(
+            top: 18,
+            right: 0,
+            child: IconButton(
+              icon: Icon(
+                Icons.close,
+                color: Colors.white,
+                size: 20,
+              ),
+              onPressed: closeCard,
             ),
-            onPressed: closeCard,
           ),
-        ),
       ],
     );
   }
