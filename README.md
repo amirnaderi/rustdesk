@@ -139,37 +139,6 @@ mv libsciter-gtk.so target/debug
 VCPKG_ROOT=$HOME/vcpkg cargo run
 ```
 
-<<<<<<< HEAD
-### Change Wayland to X11 (Xorg)
-
-DsHelpDesk does not support Wayland. Check [this](https://docs.fedoraproject.org/en-US/quick-docs/configuring-xorg-as-default-gnome-session/) to configuring Xorg as the default GNOME session.
-
-## Wayland support
-
-Wayland does not seem to provide any API for sending keypresses to other windows. Therefore, the DsHelpDesk uses an API from a lower level, namely the `/dev/uinput` device (Linux kernel level).
-
-When Wayland is the controlled side, you have to start in the following way:
-```bash
-# Start uinput service
-$ sudo dshelpdesk --service
-$ dshelpdesk
-```
-**Notice**: Wayland screen recording uses different interfaces. DsHelpDesk currently only supports org.freedesktop.portal.ScreenCast.
-```bash
-$ dbus-send --session --print-reply       \
-  --dest=org.freedesktop.portal.Desktop \
-  /org/freedesktop/portal/desktop       \
-  org.freedesktop.DBus.Properties.Get   \
-  string:org.freedesktop.portal.ScreenCast string:version
-# Not support
-Error org.freedesktop.DBus.Error.InvalidArgs: No such interface “org.freedesktop.portal.ScreenCast”
-# Support
-method return time=1662544486.931020 sender=:1.54 -> destination=:1.139 serial=257 reply_serial=2
-   variant       uint32 4
-```
-
-=======
->>>>>>> sync
 ## How to build with Docker
 
 Begin by cloning the repository and building the Docker container:
@@ -202,18 +171,6 @@ Please ensure that you are running these commands from the root of the DsHelpDes
 
 ## File Structure
 
-<<<<<<< HEAD
-- **[libs/hbb_common](https://github.com/rustdesk/dshelpdesk/tree/master/libs/hbb_common)**: video codec, config, tcp/udp wrapper, protobuf, fs functions for file transfer, and some other utility functions
-- **[libs/scrap](https://github.com/rustdesk/dshelpdesk/tree/master/libs/scrap)**: screen capture
-- **[libs/enigo](https://github.com/rustdesk/dshelpdesk/tree/master/libs/enigo)**: platform specific keyboard/mouse control
-- **[src/ui](https://github.com/rustdesk/dshelpdesk/tree/master/src/ui)**: GUI
-- **[src/server](https://github.com/rustdesk/dshelpdesk/tree/master/src/server)**: audio/clipboard/input/video services, and network connections
-- **[src/client.rs](https://github.com/rustdesk/dshelpdesk/tree/master/src/client.rs)**: start a peer connection
-- **[src/rendezvous_mediator.rs](https://github.com/rustdesk/dshelpdesk/tree/master/src/rendezvous_mediator.rs)**: Communicate with [dshelpdesk-server](https://github.com/rustdesk/dshelpdesk-server), wait for remote direct (TCP hole punching) or relayed connection
-- **[src/platform](https://github.com/rustdesk/dshelpdesk/tree/master/src/platform)**: platform specific code
-- **[flutter](https://github.com/rustdesk/dshelpdesk/tree/master/flutter)**: Flutter code for mobile
-- **[flutter/web/js](https://github.com/rustdesk/dshelpdesk/tree/master/flutter/web/js)**: JavaScript for Flutter web client
-=======
 - **[libs/hbb_common](https://github.com/rustdesk/rustdesk/tree/master/libs/hbb_common)**: video codec, config, tcp/udp wrapper, protobuf, fs functions for file transfer, and some other utility functions
 - **[libs/scrap](https://github.com/rustdesk/rustdesk/tree/master/libs/scrap)**: screen capture
 - **[libs/enigo](https://github.com/rustdesk/rustdesk/tree/master/libs/enigo)**: platform specific keyboard/mouse control
@@ -224,7 +181,6 @@ Please ensure that you are running these commands from the root of the DsHelpDes
 - **[src/platform](https://github.com/rustdesk/rustdesk/tree/master/src/platform)**: platform specific code
 - **[flutter](https://github.com/rustdesk/rustdesk/tree/master/flutter)**: Flutter code for desktop and mobile
 - **[flutter/web/js](https://github.com/rustdesk/rustdesk/tree/master/flutter/web/js)**: JavaScript for Flutter web client
->>>>>>> sync
 
 ## Snapshots
 

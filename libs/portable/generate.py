@@ -62,15 +62,9 @@ def build_portable(output_folder: str):
     os.chdir(output_folder)
     os.system("cargo build --release")
 
-<<<<<<< HEAD
 # Linux: python3 generate.py -f ../dshelpdesk-portable-packer/test -o . -e ./test/main.py
 # Windows: python3 .\generate.py -f ..\dshelpdesk\flutter\build\windows\runner\Debug\ -o . -e ..\dshelpdesk\flutter\build\windows\runner\Debug\dshelpdesk.exe
-=======
-# Linux: python3 generate.py -f ../rustdesk-portable-packer/test -o . -e ./test/main.py
-# Windows: python3 .\generate.py -f ..\rustdesk\flutter\build\windows\runner\Debug\ -o . -e ..\rustdesk\flutter\build\windows\runner\Debug\rustdesk.exe
 
-
->>>>>>> sync
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option("-f", "--folder", dest="folder",
