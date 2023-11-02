@@ -20,16 +20,11 @@ import 'package:desktop_multi_window/desktop_multi_window.dart';
 import 'package:window_size/window_size.dart' as window_size;
 
 import '../../common.dart';
-import '../../common/widgets/dialog.dart';
 import '../../models/model.dart';
 import '../../models/platform_model.dart';
 import '../../common/shared_state.dart';
 import './popup_menu.dart';
 import './kb_layout_type_chooser.dart';
-
-const _kKeyLegacyMode = 'legacy';
-const _kKeyMapMode = 'map';
-const _kKeyTranslateMode = 'translate';
 
 class ToolbarState {
   final kStoreKey = 'remoteMenubarState';
@@ -478,7 +473,7 @@ class _RemoteToolbarState extends State<RemoteToolbar> {
       toolbarItems.add(_ChatMenu(id: widget.id, ffi: widget.ffi));
       toolbarItems.add(_VoiceCallMenu(id: widget.id, ffi: widget.ffi));
     }
-    toolbarItems.add(_RecordMenu(ffi: widget.ffi));
+    toolbarItems.add(_RecordMenu());
     toolbarItems.add(_CloseMenu(id: widget.id, ffi: widget.ffi));
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -1407,18 +1402,16 @@ class _KeyboardMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     var ffiModel = Provider.of<FfiModel>(context);
     if (!ffiModel.keyboard) return Offstage();
+    // If use flutter to grab keys, we can only use one mode.
+    // Map mode and Legacy mode, at least one of them is supported.
     String? modeOnly;
     if (stateGlobal.grabKeyboard) {
       if (bind.sessionIsKeyboardModeSupported(
-          sessionId: ffi.sessionId, mode: _kKeyMapMode)) {
-        bind.sessionSetKeyboardMode(
-            sessionId: ffi.sessionId, value: _kKeyMapMode);
-        modeOnly = _kKeyMapMode;
+          sessionId: ffi.sessionId, mode: kKeyMapMode)) {
+        modeOnly = kKeyMapMode;
       } else if (bind.sessionIsKeyboardModeSupported(
-          sessionId: ffi.sessionId, mode: _kKeyLegacyMode)) {
-        bind.sessionSetKeyboardMode(
-            sessionId: ffi.sessionId, value: _kKeyLegacyMode);
-        modeOnly = _kKeyLegacyMode;
+          sessionId: ffi.sessionId, mode: kKeyLegacyMode)) {
+        modeOnly = kKeyLegacyMode;
       }
     }
     return _IconSubmenuButton(
@@ -1440,13 +1433,13 @@ class _KeyboardMenu extends StatelessWidget {
   keyboardMode(String? modeOnly) {
     return futureBuilder(future: () async {
       return await bind.sessionGetKeyboardMode(sessionId: ffi.sessionId) ??
-          _kKeyLegacyMode;
+          kKeyLegacyMode;
     }(), hasData: (data) {
       final groupValue = data as String;
       List<InputModeMenu> modes = [
-        InputModeMenu(key: _kKeyLegacyMode, menu: 'Legacy mode'),
-        InputModeMenu(key: _kKeyMapMode, menu: 'Map mode'),
-        InputModeMenu(key: _kKeyTranslateMode, menu: 'Translate mode'),
+        InputModeMenu(key: kKeyLegacyMode, menu: 'Legacy mode'),
+        InputModeMenu(key: kKeyMapMode, menu: 'Map mode'),
+        InputModeMenu(key: kKeyTranslateMode, menu: 'Translate mode'),
       ];
       List<RdoMenuButton> list = [];
       final enabled = !ffi.ffiModel.viewOnly;
@@ -1464,12 +1457,12 @@ class _KeyboardMenu extends StatelessWidget {
           continue;
         }
 
-        if (pi.isWayland && mode.key != _kKeyMapMode) {
+        if (pi.isWayland && mode.key != kKeyMapMode) {
           continue;
         }
 
         var text = translate(mode.menu);
-        if (mode.key == _kKeyTranslateMode) {
+        if (mode.key == kKeyTranslateMode) {
           text = '$text beta';
         }
         list.add(RdoMenuButton<String>(
@@ -1646,17 +1639,17 @@ class _VoiceCallMenu extends StatelessWidget {
 }
 
 class _RecordMenu extends StatelessWidget {
-  final FFI ffi;
-  const _RecordMenu({Key? key, required this.ffi}) : super(key: key);
+  const _RecordMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var ffiModel = Provider.of<FfiModel>(context);
+    var ffi = Provider.of<FfiModel>(context);
     var recordingModel = Provider.of<RecordingModel>(context);
     final visible =
-        recordingModel.start || ffiModel.permissions['recording'] != false;
+        (recordingModel.start || ffi.permissions['recording'] != false) &&
+            ffi.pi.currentDisplay != kAllDisplayValue;
     if (!visible) return Offstage();
-    final menuButton = _IconMenuButton(
+    return _IconMenuButton(
       assetName: 'assets/rec.svg',
       tooltip: recordingModel.start
           ? 'Stop session recording'
@@ -1669,14 +1662,6 @@ class _RecordMenu extends StatelessWidget {
           ? _ToolbarTheme.hoverRedColor
           : _ToolbarTheme.hoverBlueColor,
     );
-    return ChangeNotifierProvider.value(
-        value: ffi.qualityMonitorModel,
-        child: Consumer<QualityMonitorModel>(
-            builder: (context, model, child) => Offstage(
-                  // If already started, AV1->Hidden/Stop, Other->Start, same as actual
-                  offstage: model.data.codecFormat == 'AV1',
-                  child: menuButton,
-                )));
   }
 }
 
@@ -1691,7 +1676,7 @@ class _CloseMenu extends StatelessWidget {
     return _IconMenuButton(
       assetName: 'assets/close.svg',
       tooltip: 'Close',
-      onPressed: () => clientClose(ffi.sessionId, ffi.dialogManager),
+      onPressed: () => closeConnection(id: id),
       color: _ToolbarTheme.redColor,
       hoverColor: _ToolbarTheme.hoverRedColor,
     );

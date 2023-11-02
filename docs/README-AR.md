@@ -120,7 +120,7 @@ VCPKG_ROOT=$HOME/vcpkg cargo run
 
 ###  X11 (Xorg) إلى Wayland تغيير
 
-افتراضية GNOME session  ك Xorg إتبع [هذه](https://docs.fedoraproject.org/en-US/quick-docs/configuring-xorg-as-default-gnome-session/) الخطوات لإعداد Wayland لا تدعم DsHelpDesk
+افتراضية GNOME session  ك Xorg إتبع [هذه](https://docs.fedoraproject.org/en-US/quick-docs/configuring-xorg-as-default-gnome-session/) الخطوات لإعداد Wayland لا تدعم RustDesk
 
 ## Docker طريقة البناء باستخدام
 

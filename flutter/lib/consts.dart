@@ -11,6 +11,10 @@ const int kMainWindowId = 0;
 
 const kAllDisplayValue = -1;
 
+const kKeyLegacyMode = 'legacy';
+const kKeyMapMode = 'map';
+const kKeyTranslateMode = 'translate';
+
 const String kPeerPlatformWindows = "Windows";
 const String kPeerPlatformLinux = "Linux";
 const String kPeerPlatformMacOS = "Mac OS";
@@ -66,8 +70,10 @@ const int kWindowMainId = 0;
 const String kPointerEventKindTouch = "touch";
 const String kPointerEventKindMouse = "mouse";
 
-const String kKeyShowDisplaysAsIndividualWindows = 'displays_as_individual_windows';
-const String kKeyUseAllMyDisplaysForTheRemoteSession = 'use_all_my_displays_for_the_remote_session';
+const String kKeyShowDisplaysAsIndividualWindows =
+    'displays_as_individual_windows';
+const String kKeyUseAllMyDisplaysForTheRemoteSession =
+    'use_all_my_displays_for_the_remote_session';
 const String kKeyShowMonitorsToolbar = 'show_monitors_toolbar';
 
 // the executable name of the portable version
@@ -86,6 +92,14 @@ const int kDesktopMaxDisplaySize = 3840;
 
 const double kDesktopFileTransferRowHeight = 30.0;
 const double kDesktopFileTransferHeaderHeight = 25.0;
+
+double kNewWindowOffset = Platform.isWindows
+    ? 56.0
+    : Platform.isLinux
+        ? 50.0
+        : Platform.isMacOS
+            ? 30.0
+            : 50.0;
 
 EdgeInsets get kDragToResizeAreaPadding =>
     !kUseCompatibleUiMode && Platform.isLinux

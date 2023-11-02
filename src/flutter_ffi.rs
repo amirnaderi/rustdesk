@@ -210,6 +210,7 @@ pub fn session_reconnect(session_id: SessionID, force_relay: bool) {
     if let Some(session) = sessions::get_session_by_session_id(&session_id) {
         session.reconnect(force_relay);
     }
+    session_on_waiting_for_image_dialog_show(session_id);
 }
 
 pub fn session_toggle_option(session_id: SessionID, value: String) {
@@ -963,6 +964,25 @@ pub fn main_load_recent_peers_sync() -> SyncReturn<String> {
     SyncReturn("".to_string())
 }
 
+pub fn main_load_lan_peers_sync() -> SyncReturn<String> {
+    let data = HashMap::from([
+        ("name", "load_lan_peers".to_owned()),
+        (
+            "peers",
+            serde_json::to_string(&get_lan_peers()).unwrap_or_default(),
+        ),
+    ]);
+    return SyncReturn(serde_json::ser::to_string(&data).unwrap_or("".to_owned()));
+}
+
+pub fn main_load_ab_sync() -> SyncReturn<String> {
+    return SyncReturn(serde_json::to_string(&config::Ab::load()).unwrap_or_default());
+}
+
+pub fn main_load_group_sync() -> SyncReturn<String> {
+    return SyncReturn(serde_json::to_string(&config::Group::load()).unwrap_or_default());
+}
+
 pub fn main_load_recent_peers_for_ab(filter: String) -> String {
     let id_filters = serde_json::from_str::<Vec<String>>(&filter).unwrap_or_default();
     let id_filters = if id_filters.is_empty() {
@@ -1573,7 +1593,7 @@ pub fn main_is_installed() -> SyncReturn<bool> {
 
 pub fn main_start_grab_keyboard() -> SyncReturn<bool> {
     #[cfg(target_os = "linux")]
-    if !*crate::common::IS_X11 {
+    if !crate::platform::linux::is_x11() {
         return SyncReturn(false);
     }
     crate::keyboard::client::start_grab_loop();
@@ -1922,6 +1942,17 @@ pub fn plugin_install(_id: String, _b: bool) {
 
 pub fn is_support_multi_ui_session(version: String) -> SyncReturn<bool> {
     SyncReturn(crate::common::is_support_multi_ui_session(&version))
+}
+
+pub fn is_selinux_enforcing() -> SyncReturn<bool> {
+    #[cfg(target_os = "linux")]
+    {
+        SyncReturn(crate::platform::linux::is_selinux_enforcing())
+    }
+    #[cfg(not(target_os = "linux"))]
+    {
+        SyncReturn(false)
+    }
 }
 
 #[cfg(target_os = "android")]
