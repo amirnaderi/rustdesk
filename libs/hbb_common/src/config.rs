@@ -1249,6 +1249,10 @@ impl PeerConfig {
         if !mp.contains_key(key) {
             mp.insert(key.to_owned(), UserDefaultConfig::read().get(key));
         }
+        key = "i444";
+        if !mp.contains_key(key) {
+            mp.insert(key.to_owned(), UserDefaultConfig::read().get(key));
+        }
     }
 }
 

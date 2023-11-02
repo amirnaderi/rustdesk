@@ -44,7 +44,7 @@ Varianta pro mobilní platformy používá aplikační rámec (framework) Flutte
 
 - Připravte si vývojové prostředí pro jazyky Rust a C++
 
-- Nainstalujte [vcpkg](https://github.com/microsoft/vcpkg), a nastavte správně proměnnou prostsředí `VCPKG_ROOT`
+- Nainstalujte [vcpkg](https://github.com/microsoft/vcpkg), a správně nastavte proměnnou prostředí `VCPKG_ROOT`
 
   - Windows: vcpkg install libvpx:x64-windows-static libyuv:x64-windows-static opus:x64-windows-static aom:x64-windows-static
   - Linux/MacOS: vcpkg install libvpx libyuv opus aom
@@ -127,7 +127,7 @@ Poté pokaždé, když bude třeba aplikaci sestavit, spusťte následující p�
 docker run --rm -it -v $PWD:/home/user/dshelpdesk -v dshelpdesk-git-cache:/home/user/.cargo/git -v dshelpdesk-registry-cache:/home/user/.cargo/registry -e PUID="$(id -u)" -e PGID="$(id -g)" dshelpdesk-builder
 ```
 
-Všimněte si, že prvotní sestavení může trvat déle (než se do mezipaměti uloží veškeré softwarové součásti, které jsou potřeba) – následná opakování už budou rychlejší. Dále, pokud potřebujete příkazu pro sestavení zadat nějaké argumenty, je možné je zapsat na konec příkazu na pozici `<OPTIONAL-ARGS>`. Například, pokud byste chtěli sestavit optimalizovaně pro vydání, spustili byste výše uvedený příkaz následovaný `--release`. Výsledný spustitelný soubor se objeví v cílové složce na vašem systému a bude ho možné spustit pomocí:
+Všimněte si, že prvotní sestavení může trvat déle (než se do mezipaměti uloží veškeré softwarové součásti, které jsou potřeba) – následná opakování už budou rychlejší. Pokud navíc potřebujete zadat různé argumenty příkazu pro sestavení, můžete tak učinit na konci příkazu v pozici `<OPTIONAL-ARGS>`. Například, pokud byste chtěli sestavit optimalizovanou verzi pro vydání, spustili byste výše uvedený příkaz následovaný `--release`. Výsledný spustitelný soubor se objeví v cílové složce na vašem systému a bude ho možné spustit pomocí:
 
 ```sh
 target/debug/dshelpdesk
