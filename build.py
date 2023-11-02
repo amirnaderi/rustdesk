@@ -571,9 +571,9 @@ def main():
     codesign -s "Developer ID Application: {0}" --force --options runtime  ./target/release/bundle/osx/DsHelpDesk.app/Contents/MacOS/*
     codesign -s "Developer ID Application: {0}" --force --options runtime  ./target/release/bundle/osx/DsHelpDesk.app
     '''.format(pa))
-                system2('create-dmg "RustDesk %s.dmg" "target/release/bundle/osx/RustDesk.app"' % version)
-                os.rename('RustDesk %s.dmg' %
-                          version, 'rustdesk-%s.dmg' % version)
+                system2('create-dmg "DsHelpDesk %s.dmg" "target/release/bundle/osx/DsHelpDesk.app"' % version)
+                os.rename('DsHelpDesk %s.dmg' %
+                          version, 'dshelpdesk-%s.dmg' % version)
                 if pa:
                     system2('''
     # https://pyoxidizer.readthedocs.io/en/apple-codesign-0.14.0/apple_codesign.html
