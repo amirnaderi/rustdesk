@@ -40,6 +40,7 @@ pub enum PrivacyModeState {
 }
 // IPC actions here.
 pub const IPC_ACTION_CLOSE: &str = "close";
+
 pub static EXIT_RECV_CLOSE: AtomicBool = AtomicBool::new(true);
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -89,6 +90,7 @@ pub enum FS {
         id: i32,
         file_num: i32,
         err: String,
+        
     },
     WriteOffset {
         id: i32,
