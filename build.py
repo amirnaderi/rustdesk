@@ -421,6 +421,7 @@ def build_flutter_windows(version, features):
             print("cargo build failed, please check rust source code.")
             exit(-1)
     os.chdir('flutter')
+    system2('flutter clean')
     system2('flutter build windows --release')
     os.chdir('..')
     shutil.copy2('target/release/deps/dylib_virtual_display.dll',
