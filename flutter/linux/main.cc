@@ -1,28 +1,28 @@
 #include <dlfcn.h>
 #include "my_application.h"
 
-#define RUSTDESK_LIB_PATH "librustdesk.so"
-// #define RUSTDESK_LIB_PATH "/usr/lib/rustdesk/librustdesk.so"
-typedef bool (*RustDeskCoreMain)();
+#define DSHLDESK_LIB_PATH "libdshldesk.so"
+// #define DSHLDESK_LIB_PATH "/usr/lib/dshldesk/libdshldesk.so"
+typedef bool (*DshlDeskCoreMain)();
 bool gIsConnectionManager = false;
 
-bool flutter_rustdesk_core_main() {
-   void* librustdesk = dlopen(RUSTDESK_LIB_PATH, RTLD_LAZY);
-   if (!librustdesk) {
-     fprintf(stderr,"load librustdesk.so failed\n");
+bool flutter_dshldesk_core_main() {
+   void* libdshldesk = dlopen(DSHLDESK_LIB_PATH, RTLD_LAZY);
+   if (!libdshldesk) {
+     fprintf(stderr,"load libdshldesk.so failed\n");
      return true;
    }
-   auto core_main = (RustDeskCoreMain) dlsym(librustdesk,"rustdesk_core_main");
+   auto core_main = (DshlDeskCoreMain) dlsym(libdshldesk,"dshldesk_core_main");
    char* error;
    if ((error = dlerror()) != nullptr) {
-       fprintf(stderr, "error finding rustdesk_core_main: %s", error);
+       fprintf(stderr, "error finding dshldesk_core_main: %s", error);
        return true;
    }
    return core_main();
 }
 
 int main(int argc, char** argv) {
-  if (!flutter_rustdesk_core_main()) {
+  if (!flutter_dshldesk_core_main()) {
       return 0;
   }
   for (int i = 0; i < argc; i++) {

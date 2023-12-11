@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=RustDeskURL Scheme Handler
+Name=DshlDeskURL Scheme Handler
 NoDisplay=true
-MimeType=x-scheme-handler/rustdesk;
-TryExec=rustdesk
-Exec=rustdesk %u
-Icon=rustdesk
+MimeType=x-scheme-handler/dshldesk;
+TryExec=dshldesk
+Exec=dshldesk %u
+Icon=dshldesk
 Terminal=false
 Type=Application
 StartupNotify=false

@@ -1,14 +1,14 @@
 [package]
-name = "rustdesk"
+name = "dshldesk"
 version = "1.2.3"
-authors = ["rustdesk <info@rustdesk.com>"]
+authors = ["dshldesk <info@dshldesk.com>"]
 edition = "2021"
 build= "build.rs"
 description = "A remote control software."
-default-run = "rustdesk"
+default-run = "dshldesk"
 
 [lib]
-name = "librustdesk"
+name = "libdshldesk"
 crate-type = ["cdylib", "staticlib", "rlib"]
 
 [[bin]]
@@ -141,7 +141,7 @@ exclude = ["vdi/host", "examples/custom_plugin"]
 [package.metadata.winres]
 LegalCopyright = "Copyright © 2023 Purslane, Inc."
 # this FileDescription overrides package.description
-FileDescription = "RustDesk"
+FileDescription = "DshlDesk"
 
 [target.'cfg(target_os="windows")'.build-dependencies]
 winres = "0.1"
@@ -157,8 +157,8 @@ os-version = "0.2"
 hound = "3.5"
 
 [package.metadata.bundle]
-name = "RustDesk"
-identifier = "com.carriez.rustdesk"
+name = "DshlDesk"
+identifier = "com.carriez.dshldesk"
 icon = ["res/32x32.png", "res/128x128.png", "res/128x128@2x.png"]
 osx_minimum_system_version = "10.14"
 

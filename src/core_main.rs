@@ -24,10 +24,10 @@ macro_rules! my_println{
 
 #[inline]
 fn is_empty_uni_link(arg: &str) -> bool {
-    if !arg.starts_with("rustdesk://") {
+    if !arg.starts_with("dshldesk://") {
         return false;
     }
-    arg["rustdesk://".len()..].chars().all(|c| c == '/')
+    arg["dshldesk://".len()..].chars().all(|c| c == '/')
 }
 
 /// shared by flutter and sciter main function
@@ -135,7 +135,7 @@ pub fn core_main() -> Option<Vec<String>> {
 
     // linux uni (url) go here.
     #[cfg(all(target_os = "linux", feature = "flutter"))]
-    if args.len() > 0 && args[0].starts_with("rustdesk:") {
+    if args.len() > 0 && args[0].starts_with("dshldesk:") {
         return try_send_by_dbus(args[0].clone());
     }
 
@@ -519,7 +519,7 @@ fn core_main_invoke_new_connection(mut args: std::env::Args) -> Option<Vec<Strin
             }
             let params = param_array.join("&");
             let params_flag = if params.is_empty() { "" } else { "?" };
-            uni_links = format!("rustdesk://{}/{}{}{}", authority, id, params_flag, params);
+            uni_links = format!("dshldesk://{}/{}{}{}", authority, id, params_flag, params);
         }
     }
     if uni_links.is_empty() {
@@ -534,7 +534,7 @@ fn core_main_invoke_new_connection(mut args: std::env::Args) -> Option<Vec<Strin
         use winapi::um::winuser::WM_USER;
         let res = crate::platform::send_message_to_hnwd(
             "FLUTTER_RUNNER_WIN32_WINDOW",
-            "RustDesk",
+            "DshlDesk",
             (WM_USER + 2) as _, // referred from unilinks desktop pub
             uni_links.as_str(),
             false,

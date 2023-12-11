@@ -38,7 +38,7 @@ def generate_md5_table(folder: str) -> dict:
 def write_metadata(md5_table: dict, output_folder: str, exe: str):
     output_path = os.path.join(output_folder, "data.bin")
     with open(output_path, "wb") as f:
-        f.write("rustdesk".encode(encoding=encoding))
+        f.write("dshldesk".encode(encoding=encoding))
         for path in md5_table.keys():
             (compressed_data, md5_code) = md5_table[path]
             data_length = len(compressed_data)
@@ -53,7 +53,7 @@ def write_metadata(md5_table: dict, output_folder: str, exe: str):
             # md5 code
             f.write(md5_code)
         # end
-        f.write("rustdesk".encode(encoding=encoding))
+        f.write("dshldesk".encode(encoding=encoding))
         # executable
         f.write(exe.encode(encoding='utf-8'))
     print(f"metadata had written to {output_path}")
@@ -63,8 +63,8 @@ def build_portable(output_folder: str):
     os.chdir(output_folder)
     os.system("cargo build --release")
 
-# Linux: python3 generate.py -f ../rustdesk-portable-packer/test -o . -e ./test/main.py
-# Windows: python3 .\generate.py -f ..\rustdesk\flutter\build\windows\runner\Debug\ -o . -e ..\rustdesk\flutter\build\windows\runner\Debug\rustdesk.exe
+# Linux: python3 generate.py -f ../dshldesk-portable-packer/test -o . -e ./test/main.py
+# Windows: python3 .\generate.py -f ..\dshldesk\flutter\build\windows\runner\Debug\ -o . -e ..\dshldesk\flutter\build\windows\runner\Debug\dshldesk.exe
 if __name__ == '__main__':
     parser = optparse.OptionParser()
     parser.add_option("-f", "--folder", dest="folder",

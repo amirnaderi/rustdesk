@@ -57,21 +57,21 @@ jobs:
       - name: Install vcpkg dependencies
         run: |
           cd C:\
-          git clone https://github.com/Kingtous/rustdesk_thirdpary_lib --depth=1 
+          git clone https://github.com/Kingtous/dshldesk_thirdpary_lib --depth=1 
           
-      - name: Build rustdesk
+      - name: Build dshldesk
         env:
-          VCPKG_ROOT: C:\rustdesk_thirdpary_lib\vcpkg
+          VCPKG_ROOT: C:\dshldesk_thirdpary_lib\vcpkg
         run: python3 .\build.py --portable --hwcodec --flutter --feature IddDriver
 
       - name: Build self-extracted executable
         shell: bash
         run: |
           pushd ./libs/portable
-          python3 ./generate.py -f ../../flutter/build/windows/runner/Release/ -o . -e ../../flutter/build/windows/runner/Release/rustdesk.exe
+          python3 ./generate.py -f ../../flutter/build/windows/runner/Release/ -o . -e ../../flutter/build/windows/runner/Release/dshldesk.exe
           popd
           mkdir -p ./SignOutput
-          mv ./target/release/rustdesk-portable-packer.exe ./SignOutput/rustdesk-${{ matrix.job.date }}-${{ matrix.job.target }}.exe
+          mv ./target/release/dshldesk-portable-packer.exe ./SignOutput/dshldesk-${{ matrix.job.date }}-${{ matrix.job.target }}.exe
           
       - name: Publish Release
         uses: softprops/action-gh-release@v1
@@ -79,4 +79,4 @@ jobs:
           prerelease: true
           tag_name: ${{ env.TAG_NAME }}
           files: |
-            ./SignOutput/rustdesk-*.exe
+            ./SignOutput/dshldesk-*.exe

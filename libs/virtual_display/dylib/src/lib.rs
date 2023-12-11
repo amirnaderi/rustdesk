@@ -11,7 +11,7 @@ use std::sync::Mutex;
 #[cfg(windows)]
 lazy_static::lazy_static! {
     // If device is uninstalled though "Device Manager" Window.
-    // Rustdesk is unable to handle device any more...
+    // Dshldesk is unable to handle device any more...
     static ref H_SW_DEVICE: Mutex<u64> = Mutex::new(0);
 }
 

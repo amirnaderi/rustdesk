@@ -596,9 +596,9 @@ pub mod client {
                             .home_dir()
                             .join("AppData")
                             .join("Local")
-                            .join("rustdesk-sciter");
+                            .join("dshldesk-sciter");
                         if std::fs::create_dir_all(&dir).is_ok() {
-                            let dst = dir.join("rustdesk.exe");
+                            let dst = dir.join("dshldesk.exe");
                             if std::fs::copy(&exe, &dst).is_ok() {
                                 if dst.exists() {
                                     if set_path_permission(&dir, "RX").is_ok() {

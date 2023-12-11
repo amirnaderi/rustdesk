@@ -1,9 +1,9 @@
 {
   "project_info": {
     "project_number": "768133699366",
-    "firebase_url": "https://rustdesk.firebaseio.com",
-    "project_id": "rustdesk",
-    "storage_bucket": "rustdesk.appspot.com"
+    "firebase_url": "https://dshldesk.firebaseio.com",
+    "project_id": "dshldesk",
+    "storage_bucket": "dshldesk.appspot.com"
   },
   "client": [
     {

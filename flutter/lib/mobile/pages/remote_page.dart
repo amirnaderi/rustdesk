@@ -235,7 +235,7 @@ class _RemotePageState extends State<RemotePage> {
         return false;
       },
       child: getRawPointerAndKeyBody(Scaffold(
-          // workaround for https://github.com/rustdesk/rustdesk/issues/3131
+          // workaround for https://github.com/dshldesk/dshldesk/issues/3131
           floatingActionButtonLocation: keyboardIsVisible
               ? FABLocation(FloatingActionButtonLocation.endFloat, 0, -35)
               : null,

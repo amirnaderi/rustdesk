@@ -52,7 +52,7 @@ pub fn start(args: &mut [String]) {
         let dir = "/app";
         #[cfg(not(feature = "flatpak"))]
         let dir = "/usr";
-        sciter::set_library(&(prefix + dir + "/lib/rustdesk/libsciter-gtk.so")).ok();
+        sciter::set_library(&(prefix + dir + "/lib/dshldesk/libsciter-gtk.so")).ok();
     }
     #[cfg(windows)]
     // Check if there is a sciter.dll nearby.
@@ -67,7 +67,7 @@ pub fn start(args: &mut [String]) {
         }
     }
     // https://github.com/c-smile/sciter-sdk/blob/master/include/sciter-x-types.h
-    // https://github.com/rustdesk/rustdesk/issues/132#issuecomment-886069737
+    // https://github.com/dshldesk/dshldesk/issues/132#issuecomment-886069737
     #[cfg(windows)]
     allow_err!(sciter::set_options(sciter::RuntimeOptions::GfxLayer(
         sciter::GFX_LAYER::WARP

@@ -31,7 +31,7 @@ class PlatformFFI {
   // _homeDir is only needed for Android and IOS.
   String _homeDir = '';
   final _eventHandlers = <String, Map<String, HandleEvent>>{};
-  late RustdeskImpl _ffiBind;
+  late DshldeskImpl _ffiBind;
   late String _appType;
   StreamEventHandler? _eventCallback;
 
@@ -40,7 +40,7 @@ class PlatformFFI {
   static final PlatformFFI instance = PlatformFFI._();
   final _toAndroidChannel = const MethodChannel('mChannel');
 
-  RustdeskImpl get ffiBind => _ffiBind;
+  DshldeskImpl get ffiBind => _ffiBind;
   F3? _session_get_rgba;
 
   static get localeName => Platform.localeName;
@@ -107,13 +107,13 @@ class PlatformFFI {
   Future<void> init(String appType) async {
     _appType = appType;
     final dylib = Platform.isAndroid
-        ? DynamicLibrary.open('librustdesk.so')
+        ? DynamicLibrary.open('libdshldesk.so')
         : Platform.isLinux
-            ? DynamicLibrary.open('librustdesk.so')
+            ? DynamicLibrary.open('libdshldesk.so')
             : Platform.isWindows
-                ? DynamicLibrary.open('librustdesk.dll')
+                ? DynamicLibrary.open('libdshldesk.dll')
                 : Platform.isMacOS
-                    ? DynamicLibrary.open("liblibrustdesk.dylib")
+                    ? DynamicLibrary.open("liblibdshldesk.dylib")
                     : DynamicLibrary.process();
     debugPrint('initializing FFI $_appType');
     try {
@@ -124,7 +124,7 @@ class PlatformFFI {
       } catch (e) {
         debugPrint('Failed to get documents directory: $e');
       }
-      _ffiBind = RustdeskImpl(dylib);
+      _ffiBind = DshldeskImpl(dylib);
       if (Platform.isLinux) {
         // Start a dbus service, no need to await
         _ffiBind.mainStartDbusServer();
@@ -216,10 +216,10 @@ class PlatformFFI {
   }
 
   /// Start listening to the Rust core's events and frames.
-  void _startListenEvent(RustdeskImpl rustdeskImpl) {
+  void _startListenEvent(DshldeskImpl DshldeskImpl) {
     final appType =
         _appType == kAppTypeDesktopRemote ? '$_appType,$kWindowId' : _appType;
-    var sink = rustdeskImpl.startGlobalEventStream(appType: appType);
+    var sink = DshldeskImpl.startGlobalEventStream(appType: appType);
     sink.listen((message) {
       () async {
         try {

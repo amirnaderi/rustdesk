@@ -24,7 +24,7 @@ jobs:
           path: /opt/artifacts
           key: vcpkg-${{ matrix.job.arch }}
 
-      - uses: rustdesk-org/run-on-arch-action@amd64-support
+      - uses: dshldesk-org/run-on-arch-action@amd64-support
         name: Run vcpkg install on ${{ matrix.job.arch }}
         id: vcpkg
         with:
@@ -71,17 +71,17 @@ jobs:
                 ;;
               aarch64)
                 pushd /artifacts
-                rm -rf rustdesk_thirdparty_lib
-                git clone https://github.com/Kingtous/rustdesk_thirdparty_lib.git --depth=1
+                rm -rf dshldesk_thirdparty_lib
+                git clone https://github.com/Kingtous/dshldesk_thirdparty_lib.git --depth=1
                 mkdir -p /artifacts/vcpkg/installed
-                mv ./rustdesk_thirdparty_lib/vcpkg/installed/arm64-linux /artifacts/vcpkg/installed/arm64-linux
+                mv ./dshldesk_thirdparty_lib/vcpkg/installed/arm64-linux /artifacts/vcpkg/installed/arm64-linux
                 ;;
               armv7)
                 pushd /artifacts
-                rm -rf rustdesk_thirdparty_lib
-                git clone https://github.com/Kingtous/rustdesk_thirdparty_lib.git --depth=1
+                rm -rf dshldesk_thirdparty_lib
+                git clone https://github.com/Kingtous/dshldesk_thirdparty_lib.git --depth=1
                 mkdir -p /artifacts/vcpkg/installed
-                mv ./rustdesk_thirdparty_lib/vcpkg/installed/arm-linux /artifacts/vcpkg/installed/arm-linux
+                mv ./dshldesk_thirdparty_lib/vcpkg/installed/arm-linux /artifacts/vcpkg/installed/arm-linux
                 ;;
             esac
       - name: Upload artifacts
