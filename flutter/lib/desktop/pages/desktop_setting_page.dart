@@ -1002,7 +1002,7 @@ class _NetworkState extends State<_Network> with AutomaticKeepAliveClientMixin {
               AbsorbPointer(
                 absorbing: locked,
                 child: Column(children: [
-                  server(enabled),
+                  // server(enabled),
                   _Card(title: 'Proxy', children: [
                     _Button('Socks5 Proxy', changeSocks5Proxy,
                         enabled: enabled),
@@ -1062,7 +1062,7 @@ class _NetworkState extends State<_Network> with AutomaticKeepAliveClientMixin {
       bool secure = !enabled;
       return _Card(
           title: 'ID/Relay Server',
-          title_suffix: ServerConfigImportExportWidgets(controllers, errMsgs),
+          // title_suffix: ServerConfigImportExportWidgets(controllers, errMsgs),
           children: [
             Column(
               children: [
@@ -1076,7 +1076,7 @@ class _NetworkState extends State<_Network> with AutomaticKeepAliveClientMixin {
                     context, 'Key', keyController, '', enabled, secure),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [_Button('Apply', submit, enabled: enabled)],
+                  children: [_Button('Apply', submit, enabled: false)],
                 ).marginOnly(top: 10),
               ],
             )
@@ -1302,7 +1302,9 @@ class _AccountState extends State<_Account> {
           physics: DraggableNeverScrollableScrollPhysics(),
           controller: scrollController,
           children: [
-            _Card(title: 'Account', children: [accountAction(), useInfo()]),
+            _Card(title: 'Account', children: [
+              // accountAction(), useInfo()
+            ]),
           ],
         ).marginOnly(bottom: _kListViewBottomMargin));
   }
