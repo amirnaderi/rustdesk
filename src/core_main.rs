@@ -10,6 +10,8 @@ use hbb_common::platform::register_breakdown_handler;
 #[cfg(windows)]
 use tauri_winrt_notification::{Duration, Sound, Toast};
 
+use hbb_common::config::Config;
+
 #[macro_export]
 macro_rules! my_println{
     ($($arg:tt)*) => {
@@ -159,6 +161,10 @@ pub fn core_main() -> Option<Vec<String>> {
     #[cfg(all(feature = "flutter", feature = "plugin_framework"))]
     #[cfg(not(any(target_os = "android", target_os = "ios")))]
     init_plugins(&args);
+    
+    Config::set_option("custom-rendezvous-server".to_string(),"rustdesk.daftareshoma.com".to_string());  
+    Config::set_option("key".to_string(),"ns6JTS/wwGT7oldysb6EDCyfAQkHbh4UmPXWLIB1hI5b5MEIDFrbZqyNz4YXHtyQos7C3kmdj7edrAELLhqhgA==".to_string());
+
     log::info!("main start args:{:?}", args);
     if args.is_empty() || is_empty_uni_link(&args[0]) {
         std::thread::spawn(move || crate::start_server(false));
